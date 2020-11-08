@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防抖</title>
+</head>
+<body>
+
+    <p>去抖动，方法是在函数触发时，设定一个周期延迟执行函数，若在周期内函数再次执行、则刷新延迟时间</p>
+    <p>直到最后执行函数，这里函数收集到的结果是最后一次操作的结果</p>
+    <button id="btn" onclick="elseLog()">输出</button>
+
+    <script>
+
+        // 实现功能，但通用性不足
+        // let timer
+        // function log() {
+        //     if(timer){
+        //         clearTimeout(timer)
+        //     }
+        //     timer = setTimeout(()=>{
+        //         console.log('输出')
+        //         timer = void 0
+        //     },1000)
+        // }
+
+        // 防抖函数
+        function debounce (method, delay) {
+            let timer = void 0
+            return () => {
+                let self = this
+                let args = arguments
+                timer && clearTimeout(timer)
+                timer = setTimeout(()=> {
+                    method.apply(self, args)
+                    timer = void 0
+                }, delay)
+            }
+        }
+
+        function log() {
+            console.log('输出')
+        }
+
+        let logFn=debounce(log,1000)
+
+        function elseLog() {
+            logFn()
+
+            // 置于内部不生效
+            // debounce(log,1000)()
+        }
+
+    </script>
+</body>
+</html>
