@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sticky</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .center{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        header{
+            height: 40vh;
+            background-color: #69a7ff;
+        }
+        .sticky-box{
+            position: sticky;
+            /*top可以设置距离视窗顶部的高度，不只是吸顶效果，更可以理解为滞黏*/
+            top: 0;
+            height: 88px;
+            background-color: #fff;
+            /*不设置z-index后面同样sticky的会覆盖*/
+            z-index: 99;
+        }
+        .block{
+            overflow: hidden;
+            height: 2400px;
+            background-color: #787878;
+        }
+        .scroll-box{
+            overflow-y: scroll;
+            margin: 100px auto;
+            width: 80vw;
+            height: 500px;
+            background-color: #fff;
+        }
+        .hidden-box{
+            /*设置为hidden不能滚动自然就无效了*/
+            overflow: hidden;
+            margin: 100px auto;
+            width: 80vw;
+            height: 500px;
+            background-color: #fff;
+        }
+        .auto-box{
+            /*auto同样能生效*/
+            overflow: auto;
+            margin: 100px auto;
+            width: 80vw;
+            height: 500px;
+            background-color: #fff;
+        }
+        .inline-head{
+            height: 300px;
+            font-size: 32px;
+            background-color: #f13939;
+        }
+        .inline-sticky{
+            position: sticky;
+            /*在 viewport 视口滚动到元素 top 距离小于 10px 之前，元素为相对定位。之后，元素将固定在与顶部距离 10px 的位置，直到 viewport 视口回滚到阈值以下*/
+            top: 10px;
+            margin: 10px 0;
+            height: 80px;
+            color: #f13939;
+            background-color: #69a7ff;
+        }
+        .inline-block{
+            height: 700px;
+            background-color: #ffebcd;
+        }
+
+    </style>
+</head>
+<body>
+
+<header class="center">
+    <h1>Header</h1>
+</header>
+<div class="center sticky-box">
+    <h2>Sticky</h2>
+</div>
+<div class="block">
+
+    <div class="scroll-box">
+        <div class="center inline-head">
+            SCROLL
+        </div>
+        <div>
+            <div class="center inline-sticky">
+                <h3>A</h3>
+            </div>
+            <div class="inline-block"></div>
+        </div>
+        <div>
+            <div class="center inline-sticky">
+                <h3>B</h3>
+            </div>
+            <div class="inline-block"></div>
+        </div>
+        <div>
+            <div class="center inline-sticky">
+                <h3>C</h3>
+            </div>
+            <div class="inline-block"></div>
+        </div>
+    </div>
+
+    <div class="hidden-box">
+        <div class="center inline-head">
+            HIDDEN
+        </div>
+        <div class="center inline-sticky">
+            <h3>A</h3>
+        </div>
+        <div class="inline-block"></div>
+    </div>
+
+    <div class="auto-box">
+        <div class="center inline-head">
+            AUTO
+        </div>
+        <div class="center inline-sticky">
+            <h3>A</h3>
+        </div>
+        <div class="inline-block"></div>
+    </div>
+
+</div>
+
+
+</body>
+</html>

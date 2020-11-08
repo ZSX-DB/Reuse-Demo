@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OffsetTop</title>
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .fixed{
+            position: fixed;
+            top: 0;
+            left: 20px;
+        }
+
+        .top-zero{
+            margin-top: 0!important;
+        }
+
+        .green{
+            background-color: #008000!important;
+        }
+
+        .box{
+            height: 500px;
+            border: 1px solid #130f40;
+            box-sizing: border-box;
+        }
+
+        .inline-box{
+            margin: 50px auto;
+            width: calc(100% - 40px);
+            height: 100px;
+            background-color: #f13939;
+        }
+        .interval{
+            margin-top: 50px;
+        }
+
+        .block{
+            overflow: hidden;
+            height: 2400px;
+            background-color: #787878;
+        }
+
+        .center{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <div id="one-box" class="inline-box center">
+        <h1>ONE</h1>
+    </div>
+</div>
+
+<!--当设置了relative或fixed后，id为two-box的div的offsetParent就变成了class为relative box的div-->
+<div class="relative box">
+    <div id="two-box" class="inline-box center">
+        <h1>TWO</h1>
+    </div>
+</div>
+
+<div class="box interval">
+<!--    需要让id为three-box的元素吸顶-->
+    <div id="three-box" class="inline-box center top-zero green">
+        <h1>OffsetTop</h1>
+    </div>
+</div>
+
+<div class="box">
+    <div id="four-box" class="inline-box center">
+        <h1>Four</h1>
+    </div>
+</div>
+
+<div class="block"></div>
+
+<script>
+
+    // HTMLElement.offsetTop 为只读属性，它返回当前元素相对于其 offsetParent 元素的顶部内边距的距离
+    // offsetTop包含了边框
+    let ob = document.querySelector('#one-box')
+    // console.log(ob.offsetTop)
+
+    let tb = document.querySelector('#two-box')
+    // console.log(tb.offsetTop,tb.offsetParent)
+
+    // 原理: 但scrollTop = thb.offsetParent时，添加fixed定位
+    let thb = document.querySelector('#three-box')
+    // console.log('thb的offsetParent', thb.offsetParent)
+    // console.log(thb.offsetTop, document.documentElement.scrollTop)
+
+    // 必须置于监听外，因为监听会实时计算
+    // const thbOffsetTop = thb.offsetTop
+    // window.addEventListener('scroll',()=>{
+    //     // 当添加了fixed类后，thb的offsetTop会变成0(原因是offsetParent变为null)，导致只有滚动条为0时，才恢复
+    //     // document.documentElement.scrollTop > thb.offsetTop ? thb.classList.add('fixed') : thb.classList.remove('fixed')
+    //     document.documentElement.scrollTop > thbOffsetTop ? thb.classList.add('fixed') : thb.classList.remove('fixed')
+    // })
+
+    function setFixed(domObj, mt = 0 ) {
+        const ot = domObj.offsetTop
+        window.addEventListener('scroll',()=>{
+            // 如果ot设置了margin-top
+            document.documentElement.scrollTop + mt > ot ? domObj.classList.add('fixed') : domObj.classList.remove('fixed')
+        })
+    }
+
+    setFixed(thb)
+    // setFixed(document.querySelector('#four-box'), 50)
+
+
+</script>
+
+</body>
+</html>

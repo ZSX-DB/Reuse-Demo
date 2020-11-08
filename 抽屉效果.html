@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>抽屉效果</title>
+    <script src="vue.js"></script>
+    <style>
+
+        body{
+            margin: 0;
+            padding: 0;
+        }
+
+        .layer{
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(128,128,128,.4);
+        }
+
+        .drawer{
+            margin-left: auto;
+            width: 380px;
+            height: 100vh;
+            background: #fff;
+        }
+
+
+        .start{
+            transform: translateX(380px);
+        }
+        .left-animation{
+            animation: toLeft .5s;
+            animation-fill-mode: forwards;
+        }
+        @keyframes toLeft {
+            to{
+                transform: translateX(0);
+            }
+        }
+
+        .end{
+            transform: translateX(0);
+        }
+        .right-animation{
+            animation: toRight .5s;
+            animation-fill-mode: forwards;
+        }
+        @keyframes toRight {
+            to{
+                transform: translateX(380px);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="app">
+    <button @click="toShowDrawer">点击显示抽屉</button>
+    <div class="layer" v-show="showLayer">
+        <div class="drawer"
+             :class="{start:showDrawer,'left-animation':showDrawer,end:closeDrawer,'right-animation':closeDrawer}">
+            <button @click="toCloseDrawer">点击关闭抽屉</button>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    let vm=new Vue({
+        el:'#app',
+        data:{
+            showLayer:false,
+            showDrawer:false,
+            closeDrawer:false
+        },
+        methods:{
+            toShowDrawer(){
+                this.showLayer=!this.showLayer;
+                this.showDrawer=true;
+                this.closeDrawer=false;
+            },
+            toCloseDrawer(){
+                this.showDrawer=false;
+                this.closeDrawer=true;
+                setTimeout(()=>{
+                    this.showLayer=!this.showLayer;
+                },500)
+            }
+        }
+    })
+
+</script>
+
+</body>
+</html>

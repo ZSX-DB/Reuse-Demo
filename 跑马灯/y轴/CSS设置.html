@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS设置</title>
+    <style>
+
+        body{
+            background-color: #2fbf3d;
+        }
+
+        .box{
+            overflow: hidden;
+            margin-top: 200px;
+            width: 500px;
+            height: 40px;
+            border: 1px solid #000;
+            box-sizing: border-box;
+            color: #fff;
+            white-space: nowrap;
+            background-color: #000;
+        }
+
+        .item{
+            padding-left: 10px;
+            line-height: 40px;
+            color: #fff;
+            /*animation: run 8.4s infinite;*/
+            animation: run-improve 8.4s infinite;
+            cursor: pointer;
+        }
+
+        @keyframes run {
+            0%{
+                transform: translateY(0px);
+            }
+            25%{
+                transform: translateY(-40px);
+            }
+            50%{
+                transform: translateY(-80px);
+            }
+            75%{
+                transform: translateY(-120px);
+            }
+            100%{
+                transform: translateY(-160px);
+            }
+        }
+
+        /*添加停顿*/
+        @keyframes run-improve {
+            0%{
+                transform: translateY(0);
+            }
+            2%{
+                transform: translateY(0);
+            }
+            24%{
+                transform: translateY(-40px);
+            }
+            26%{
+                transform: translateY(-40px);
+            }
+            48%{
+                transform: translateY(-80px);
+            }
+            50%{
+                transform: translateY(-80px);
+            }
+            72%{
+                transform: translateY(-120px);
+            }
+            74%{
+                transform: translateY(-120px);
+            }
+            100%{
+                transform: translateY(-160px);
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <div class="item" onclick="log(1)">y轴跑马灯实现</div>
+    <div class="item" onclick="log(2)">前端实现</div>
+    <div class="item" onclick="log(3)">可能使用margin-top</div>
+    <div class="item" onclick="log(4)">短暂停留</div>
+    <div class="item" onclick="log(1)">y轴跑马灯实现</div>
+</div>
+
+<script>
+
+    function log(num) {
+        console.log(num)
+    }
+
+</script>
+
+</body>
+</html>

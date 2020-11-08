@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>页面刷新监听</title>
+</head>
+<body>
+
+<a href="https://www.baidu.com/">百度</a>
+
+<script>
+
+    // onload是进入页面进行加载
+    window.onload=function(){
+        console.log('进入加载')
+    }
+
+    // onbeforeunload当关闭页面会调用，在它后面还有onunload
+    window.onbeforeunload = function () {
+        // 当关闭或跳转新页面时会提示，但无法自定义提示
+        return true
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ScrollIntoView</title>
+    <style>
+
+        .center{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .a-box{
+            position: fixed;
+            right: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin-top: calc((100vh - 80px) / 2);
+            width: 100px;
+            height: 80px;
+        }
+
+        a{
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        .block{
+            position: relative;
+            width: 200px;
+            height: 1200px;
+        }
+
+        .inline-top-block{
+            position: absolute;
+            top: 0;
+            width: 200px;
+            height: 100px;
+        }
+
+        .inline-bottom-block{
+            position: absolute;
+            bottom: 0;
+            width: 200px;
+            height: 100px;
+        }
+
+        #one{
+            background-color: #f13939;
+        }
+
+        #two{
+            background-color: #2fbf3d;
+        }
+
+        #three{
+            background-color: #3387ff;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="a-box">
+    <a onclick="scrollView('one')">BlockOne</a>
+    <a onclick="scrollView('two')">BlockTwo</a>
+    <a onclick="scrollView('three')">BlockThree</a>
+</div>
+
+<div class="block" id="one">
+    <div class="center inline-top-block">
+        top
+    </div>
+    <div class="center inline-bottom-block">
+        bottom
+    </div>
+</div>
+<div class="block" id="two">
+    <div class="center inline-top-block">
+        top
+    </div>
+    <div class="center inline-bottom-block">
+        bottom
+    </div>
+</div>
+<div class="block" id="three">
+    <div class="center inline-top-block">
+        top
+    </div>
+    <div class="center inline-bottom-block">
+        bottom
+    </div>
+</div>
+
+<script>
+
+    function scrollView(id) {
+        const idName = `#${id}`
+        const idEle = document.querySelector(idName)
+        // true或false定义是顶部对齐还是底部对齐
+        // idEle.scrollIntoView(true)
+        idEle.scrollIntoView({
+            // 动画过渡效果，默认为auto，无动画效果
+            behavior: 'smooth',
+            // 定义垂直方向的对齐，默认为start
+            block: 'start'
+            // 定义水平方向的对齐
+            // inline: 'center'
+        })
+    }
+
+</script>
+
+
+</body>
+</html>

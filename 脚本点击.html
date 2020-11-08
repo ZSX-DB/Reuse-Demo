@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>脚本点击</title>
+</head>
+<body>
+    <button id="btn" onclick="log()">LOG</button>
+
+<script>
+
+let count = 0
+function log(){
+    count = count + 2
+    console.log(`This Is Log Fn, And The Count Is ${count} `)
+}
+
+// 脚本点击代码
+// setInterval(() => {
+//     document.querySelector('#btn').click()
+// }, 1000)
+
+</script>
+
+</body>
+</html>

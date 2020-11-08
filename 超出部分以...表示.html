@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>超出部分以...表示</title>
+    <style>
+        .box {
+            width: 100px;
+            border: 1px solid red;
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2;
+            /*需要多行显示时需设置以下属性*/
+            word-break: break-word;
+        }
+
+        .text {
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            /*该属性规定段落中的文本不进行换行，因为这个设置所以不用担心height属性对元素的影响。*/
+            white-space: nowrap;
+            /* -webkit-line-clamp: 1; */
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <!--    多行显示-->
+    该属性规定段落中的文本不进行换行，因为这个设置所以不用担心height属性对元素的影响。
+</div>
+
+<div class="text">
+    <!--    单行显示-->
+    testtesttesttesttesttesttesttest
+    esttesttesttesttesttesttest
+    testtesttesttesttesttesttesttest
+</div>
+
+
+</body>
+</html>

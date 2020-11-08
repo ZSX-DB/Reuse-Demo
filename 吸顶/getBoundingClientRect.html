@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GetBoundingClientRect</title>
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        .center{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fixed{
+            position: fixed;
+            top: 0;
+            left: 20px;
+        }
+
+        .top-zero{
+            margin-top: 0!important;
+        }
+
+        .box{
+            height: 500px;
+            border: 1px solid #130f40;
+            box-sizing: border-box;
+        }
+
+        .inline-box{
+            margin: 50px auto;
+            width: calc(100% - 40px);
+            height: 100px;
+            background-color: #f13939;
+        }
+
+        .block{
+            overflow: hidden;
+            height: 2400px;
+            background-color: #787878;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <div id="one-box" class="inline-box center">
+        <h1>ONE</h1>
+    </div>
+</div>
+
+<div class="box">
+    <div id="two-box" class="inline-box center top-zero">
+        <h1>TWO</h1>
+    </div>
+</div>
+
+<div class="block"></div>
+
+<script>
+
+    function setFixed(childDomObj, parentDomObj, mt = 0) {
+        window.addEventListener('scroll',()=>{
+            const cT = childDomObj.getBoundingClientRect().top
+            const pT = parentDomObj.getBoundingClientRect().top
+            if(cT - mt < 0) childDomObj.classList.add('fixed')
+            if(pT > 0) childDomObj.classList.remove('fixed')
+        })
+    }
+
+    setFixed(document.querySelector('#two-box'),document.querySelectorAll('.box')[1])
+
+</script>
+
+</body>
+</html>

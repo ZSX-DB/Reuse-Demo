@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>aTag</title>
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        .center{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .a-box{
+            position: fixed;
+            top: 80vh;
+            right: 80px;
+            width: 88px;
+            height: 88px;
+            border-radius: 50%;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        .scroll-box{
+            overflow-y: scroll;
+            /*添加过渡效果*/
+            scroll-behavior: smooth;
+            height: 100vh;
+        }
+
+        .block{
+            width: 100%;
+            height: 100vh;
+        }
+
+        .block:nth-child(1){
+            background-color: #13227a;
+        }
+
+        .block:nth-child(2){
+            background-color: #d4237a;
+        }
+
+        .block:nth-child(3){
+            background-color: #1afa29;
+        }
+
+        .block:nth-child(4){
+            background-color: #dbdbdb;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="center a-box">
+    <a href="#top-block">BackToTop</a>
+</div>
+
+<div class="scroll-box">
+    <div id="top-block"></div>
+    <div class="block"></div>
+    <div class="block"></div>
+    <div class="block"></div>
+    <div class="block"></div>
+</div>
+
+</body>
+</html>

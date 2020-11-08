@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>x轴跑马灯</title>
+    <style>
+
+        body{
+            background-color: #2fbf3d;
+        }
+
+        .box{
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            width: 500px;
+            height: 40px;
+            color: #fff;
+            white-space: nowrap;
+            background-color: #000;
+        }
+
+        #text{
+            margin-left: 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <div id="text">判断文字的长度和容器的长度，如果文字长度大于容器长度，则开始滚动，否则不滚动</div>
+</div>
+
+<script>
+
+
+
+
+    function runMarquee() {
+        let ml = 0
+        const [text, box] = [document.querySelector('#text'), document.querySelector('.box')]
+        setInterval(()=>{
+            ml -= 1
+            // 此时text完全消失
+            if(ml === -text.clientWidth){
+                text.style.marginLeft = `${box.clientWidth}px`
+                ml = box.clientWidth
+            }
+            text.style.marginLeft = `${ml - 1}px`
+        },10)
+    }
+
+    setTimeout(()=>{
+        runMarquee()
+    },3000)
+
+</script>
+
+</body>
+</html>

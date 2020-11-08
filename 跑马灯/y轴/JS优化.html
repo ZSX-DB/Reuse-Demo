@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS优化</title>
+    <style>
+
+        body{
+            background-color: #2fbf3d;
+        }
+
+        .box{
+            overflow: hidden;
+            margin-top: 200px;
+            width: 500px;
+            height: 40px;
+            background-color: #000;
+        }
+
+        .item{
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            height: 40px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+<button onclick="run()">
+    run
+</button>
+
+<div class="box">
+    <div id="marquee-box">
+        <div class="item" onclick="log(1)">y轴跑马灯实现</div>
+        <div class="item" onclick="log(2)">前端实现</div>
+        <div class="item" onclick="log(3)">可能使用margin-top</div>
+        <div class="item" onclick="log(4)">短暂停留</div>
+    </div>
+</div>
+
+<script>
+
+    // 优化项: 1、自动添加子节点
+    //        2、translateY性能优化
+
+    function runMarquee(node, step = 1, time = 20, stopTime = 1000) {
+        // 最后追加子节点
+        let firstNode = node.children[0]
+        let newNode = firstNode.cloneNode(true)
+        node.append(newNode)
+        // 获取children的数量
+        let childNodeNum = node.children.length
+        // 获取此时的node高度
+        let ch = node.clientHeight
+        // 子节点的高度
+        let cnh = ch / childNodeNum
+        // 最后停止的高度
+        let lastHeight = ch * ((childNodeNum - 1) / childNodeNum)
+        const start = initTY => {
+            // 初始化translateY
+            let ty = initTY
+            let interval = setInterval(()=>{
+                // 判断不是第一项或最后一项
+                if(Number.isInteger(ty / cnh) && ty !== initTY && ty !== -lastHeight ){
+                    clearInterval(interval)
+                    setTimeout(()=>{
+                        start(ty)
+                    }, stopTime)
+                }else if(ty === -lastHeight){
+                    clearInterval(interval)
+                    node.style.transform = `translateY(0)`
+                    setTimeout(()=>{
+                        start(0)
+                    },stopTime)
+                }else {
+                    ty -= step
+                    node.style.transform = `translateY(${ty}px)`
+                }
+            }, time)
+        }
+
+        setTimeout(()=>{
+            start(0)
+        }, stopTime)
+
+    }
+
+    function run(){
+        // 外部box的高度必须与item相同
+        // step必须能被item的高度整除
+        runMarquee(document.querySelector('#marquee-box'), 5)
+    }
+
+    function log(num) {
+        console.log(num)
+    }
+
+</script>
+
+
+</body>
+</html>

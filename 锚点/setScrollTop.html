@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SetScrollTop</title>
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        header{
+            height: 500px;
+        }
+
+        .center{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .a-box{
+            position: fixed;
+            top: calc((100vh - 80px) / 2);
+            right: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            width: 100px;
+            height: 80px;
+        }
+
+        a{
+            margin: 10px;
+        }
+
+        .scroll-box{
+            overflow-y: scroll;
+            /*添加过渡效果*/
+            scroll-behavior: smooth;
+            height: 100vh;
+        }
+
+        .block{
+            width: 200px;
+            height: 1200px;
+        }
+
+        #one{
+            background-color: #f13939;
+        }
+
+        #two{
+            background-color: #2fbf3d;
+        }
+
+        #three{
+            background-color: #3387ff;
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+<div class="a-box">
+    <a onclick="setScrollTop('one', document.querySelector('.scroll-box'))">BlockOne</a>
+    <a onclick="setScrollTop('two', document.querySelector('.scroll-box'), 50)">BlockTwo</a>
+    <a onclick="setScrollTop('three', document.querySelector('.scroll-box'), 120)">BlockThree</a>
+</div>
+
+<!--这里置于scroll-box内，是为了设置scroll-behavior: smooth;的过渡效果-->
+<!--如果直接排布，则可设置document.documentElement.scrollTop，但过渡效果就必须手动实现了-->
+<div class="scroll-box">
+    <header class="center">
+        <h1>Header</h1>
+    </header>
+    <div class="block" id="one"></div>
+    <div class="block" id="two"></div>
+    <div class="block" id="three"></div>
+</div>
+
+
+
+<script>
+
+    // 操纵scrollTop可以灵活设置距离顶部的距离
+    function setScrollTop(id, parentNode, mt = 0) {
+        const idName = `#${id}`
+        const idEle = document.querySelector(idName)
+        const idOT = idEle.offsetTop
+        parentNode.scrollTop = idOT - mt
+    }
+
+</script>
+
+</body>
+</html>

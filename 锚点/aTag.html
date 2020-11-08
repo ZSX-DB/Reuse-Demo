@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>aTag</title>
+    <style>
+
+        *{
+            margin: 0;
+            padding: 0;
+        }
+
+        .a-box{
+            position: fixed;
+            right: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin-top: calc((100vh - 80px) / 2);
+            width: 100px;
+            height: 80px;
+        }
+
+        a{
+            margin: 10px;
+        }
+
+        .scroll-box{
+            overflow-y: scroll;
+            /*添加过渡效果*/
+            scroll-behavior: smooth;
+            height: 100vh;
+        }
+
+        .block{
+            width: 200px;
+            height: 1200px;
+        }
+
+        #one{
+            background-color: #f13939;
+        }
+
+        #two{
+            background-color: #2fbf3d;
+        }
+
+        #three{
+            background-color: #3387ff;
+        }
+
+    </style>
+</head>
+<body>
+
+
+<div class="a-box">
+    <a href="#one">BlockOne</a>
+    <a href="#two">BlockTwo</a>
+    <a href="#three">BlockThree</a>
+</div>
+
+<div class="scroll-box">
+    <div class="block" id="one"></div>
+    <div class="block" id="two"></div>
+    <div class="block" id="three"></div>
+</div>
+
+
+</body>
+</html>
