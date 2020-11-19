@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>可视区动画</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .one {
+            background-color: #c94b72;
+        }
+
+        .two {
+            background-color: #cc7832;
+        }
+
+        .three {
+            background-color: #73c991;
+        }
+
+        .four {
+            background-color: #40b6e0;
+        }
+
+        .text {
+            font-size: 56px;
+            font-weight: 900;
+            color: #fff;
+        }
+
+        .show {
+            animation: show 3s;
+        }
+
+        @keyframes show {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<!--需求：当某个div滚动到可视区时，才执行动画-->
+
+<div class="box one">
+        <span class="text show">
+            Page1
+        </span>
+</div>
+<div class="box two">
+        <span class="text">
+            Page2
+        </span>
+</div>
+<div class="box three">
+        <span class="text">
+            Page3
+        </span>
+</div>
+<div class="box four">
+        <span class="text">
+            Page4
+        </span>
+</div>
+
+<script>
+
+    // 思路：对滚动进行监听，当div进入可视区域时，添加动画
+    const viewPortHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight
+    const oneText = document.querySelectorAll('.text')[1]
+    const twoText = document.querySelectorAll('.text')[2]
+    const threeText = document.querySelectorAll('.text')[3]
+
+    const addAnimation = () => {
+        console.log('scroll')
+        const list = [oneText, twoText, threeText]
+        list.forEach(item => {
+            if(item.getBoundingClientRect().top < viewPortHeight && !item.classList.contains('show')) item.classList.add('show')
+            // 当最后一个元素添加动画后，清除监听
+            if(threeText.classList.contains('show')) document.removeEventListener('scroll', addAnimation)
+        })
+    }
+
+    document.addEventListener('scroll', addAnimation)
+
+    // document.addEventListener('scroll', () => {
+    //     const list = [oneText, twoText, threeText]
+    //     list.forEach(item => {
+    //         if(item.getBoundingClientRect().top < viewPortHeight && !item.classList.contains('show')) item.classList.add('show')
+    //     })
+    // })
+
+
+</script>
+
+
+</body>
+</html>
