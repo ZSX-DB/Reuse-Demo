@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>浏览器判断</title>
+</head>
+<body>
+
+<script>
+
+    console.log('UA标识', window.navigator.userAgent)
+
+    // 判断浏览器载体
+    const getBrowserType = () => {
+        // navigator.userAgent获取ua标识，toLowerCase转化为小写便于判断
+        const ua = navigator.userAgent.toLowerCase()
+        const testUA = regexp => regexp.test(ua)
+        // 系统
+        let system = 'unknown'
+        const systemObj = {
+            windows: /windows|win32|win64|wow32|wow64/g,
+            macOS: /macintosh|macintel/g,
+            linux: /x11/g,
+            android: /android|adr/g,
+            iOS: /iphone/g,
+            iPadOS: /ipad/g
+        }
+        for(const prop in systemObj){
+            if(testUA(systemObj[prop])){
+                system = prop
+                break
+            }
+        }
+        // 平台
+        let platform = 'unknown'
+        const desktopList = ['windows', 'macOS', 'linux']
+        const mobileList = ['android', 'iOS', 'iPadOS']
+        if(desktopList.includes(system)){
+            platform = 'desktop'
+        }else if(mobileList.includes(system) || testUA(/mobile/g) ){
+            platform = 'mobile'
+        }
+        // 内核
+        let kernel = 'unknown'
+        // 浏览器
+        let supporter = 'unknown'
+        const list = [
+            {
+                kernel: 'webkit',
+                regular: /applewebkit/g,
+                supporter: {
+                    chrome: /chrome/g,
+                    safari: /safari/g,
+                    edge: /edge/g,
+                    opera: /opr/g
+                }
+            },
+            {
+                kernel: 'gecko',
+                regular: /gecko/g,
+                supporter: {
+                    firefox: /firefox/g
+                }
+            },
+            {
+                kernel: 'presto',
+                regular: /presto/g,
+                supporter: 'opera'
+            },
+            {
+                kernel: 'trident',
+                regular: /trident|compatible|msie/g,
+                supporter: 'ie'
+            }
+        ]
+        for(let i =0;i<list.length;i++){
+            if(testUA(list[i].regular)){
+                kernel = list[i].kernel
+                const sup = list[i].supporter
+                if(typeof sup === 'object'){
+                    for(const prop in sup){
+                        if( sup.hasOwnProperty(prop) && testUA(sup[prop])){
+                            supporter = prop
+                            break
+                        }
+                    }
+                }else {
+                    supporter = sup
+                }
+                break
+            }
+        }
+
+        return {
+            system,
+            platform,
+            kernel,
+            supporter
+        }
+
+    }
+
+    console.log('浏览器载体', getBrowserType())
+
+    // 参考链接: https://juejin.cn/post/6844903874113830920
+
+</script>
+
+</body>
+</html>
