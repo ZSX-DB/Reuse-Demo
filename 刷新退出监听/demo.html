@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>刷新退出监听</title>
+</head>
+<body>
+
+<!--应用场景通常是表单校验-->
+<a href="https://cn.bing.com/">必应</a>
+
+<script>
+
+    // onbeforeunload当关闭页面会调用，在它后面还有onunload
+    // 当关闭或跳转新页面时会提示，但无法自定义提示
+    // 即使后面设置为false也无法去除提示
+    window.onbeforeunload = () => true
+
+</script>
+
+</body>
+</html>

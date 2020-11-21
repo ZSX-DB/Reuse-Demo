@@ -4,26 +4,39 @@
     <meta charset="UTF-8">
     <title>超出部分以...表示</title>
     <style>
-        .box {
-            width: 100px;
-            border: 1px solid red;
+
+        .box{
+            padding: 3px;
+            width: 120px;
+            height: 120px;
+            box-sizing: border-box;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .simple-ellipsis{
+            overflow: hidden;
+            /*该属性规定段落中的文本不进行换行，因为这个设置所以不用担心height属性对元素的影响。*/
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .multi-box{
+            /*设置过大的padding会使得下方文本出现*/
+            padding: 3px;
+            margin-top: 10px;
+            /*这里不能指定height*/
+            width: 120px;
+            box-sizing: border-box;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2);
+        }
+        .multi-ellipsis{
             display: -webkit-box;
             overflow: hidden;
             -webkit-box-orient: vertical;
-            -webkit-line-clamp: 2;
+            -webkit-line-clamp: 3;
             /*需要多行显示时需设置以下属性*/
             word-break: break-word;
-        }
-
-        .text {
-            width: 100px;
-            height: 100px;
-            border: 1px solid red;
-            overflow: hidden;
             text-overflow: ellipsis;
-            /*该属性规定段落中的文本不进行换行，因为这个设置所以不用担心height属性对元素的影响。*/
-            white-space: nowrap;
-            /* -webkit-line-clamp: 1; */
         }
 
 
@@ -31,18 +44,13 @@
 </head>
 <body>
 
-<div class="box">
-    <!--    多行显示-->
-    该属性规定段落中的文本不进行换行，因为这个设置所以不用担心height属性对元素的影响。
+<div class="box simple-ellipsis">
+    该属性规定段落中的文本不进行换行，因为这个设置所以不用担心height属性对元素的影响
 </div>
 
-<div class="text">
-    <!--    单行显示-->
-    testtesttesttesttesttesttesttest
-    esttesttesttesttesttesttest
-    testtesttesttesttesttesttesttest
+<div class="multi-box multi-ellipsis">
+    该属性规定段落中的文本不进行换行，因为这个设置所以不用担心height属性对元素的影响
 </div>
-
 
 </body>
 </html>

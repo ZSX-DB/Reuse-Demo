@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>样式改造</title>
+    <style>
+
+        .img{
+            display: block;
+            margin: 0 auto;
+            width: 700px;
+            object-fit: cover;
+        }
+
+        .box {
+            overflow: auto;
+            margin: 0 auto;
+            width: 700px;
+            height: 500px;
+        }
+
+        .box::-webkit-scrollbar{
+            /*滚动条整体样式，高宽分别对应横竖滚动条的样式*/
+            width: 14px;
+            height: 14px;
+        }
+
+        .box::-webkit-scrollbar-button{
+            /*滚动条上下左右按钮*/
+            background-color: #787878;
+        }
+
+        .box::-webkit-scrollbar-corner{
+            /*滚动条交汇处*/
+            background-color: #000;
+        }
+
+        .box::-webkit-scrollbar-thumb{
+            /*滚动条里面小方块*/
+            border-radius: 5px;
+            box-shadow: inset 0 0 5px rgba(0, 0, 0, .4);
+            background-color: rgba(0, 0, 0, .6);
+        }
+
+        /*可以增加hover属性*/
+        .box::-webkit-scrollbar-thumb:hover{
+            background: rgba(0,0,0,.8);
+        }
+
+        .box::-webkit-scrollbar-track{
+            /*滚动条轨道*/
+            box-shadow: inset 0 0 5px rgba(0,0,0,.2);
+            border-radius: 0;
+            background: rgba(0,0,0,.1);
+        }
+
+        .link{
+            margin-top: 45px;
+            text-align: center;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<img src="images/scrollbar.png" alt="scrollbar" class="img">
+
+<!--在firefox无法更改滚动条样式-->
+<div class="box">
+    <p>webkit滚动条样式重置</p><br>
+    1、scrollbar包含scrollbar buttons和一个track。track进一步细分为track pieces和thumb。trace pieces为thumb的上半部分和半下部分<br>
+    2、scrollbar corner为横向和竖向的交叉角区域<br>
+    3、resize用来设置滚动条的交汇处上用于拖动调整元素大小的小控件<br>
+
+    <p>组成结构图如上图所示</p>
+
+    一旦发现滚动条的自定义样式，浏览器的默认样式设置将会失效，只使用在css定义的样式。也就意味值不能单独只设置scrollbar button或scrollbar track<br>
+
+    -webkit-scrollbar  /* 滚动条整体部分，重置时必须要设置 */<br>
+    -webkit-scrollbar-button  /* 滚动条的轨道的两端按钮  */<br>
+    -webkit-scrollbar-track /* 滚动条的轨道（包含thumb和trace-piece）*/<br>
+    -webkit-scrollbar-track-piece /* 轨道中下方块的上下(左右)部分*/<br>
+    -webkit-scrollbar-thumb  /*滚动条里面的小方块*/<br>
+    -webkit-scrollbar-corner /* 垂直和水平的交叉角 */<br>
+    -webkit-resize // 滚动条的交汇处上用于拖动调整元素大小的小控件 */<br>
+
+    <p>可以结合以下伪类进行设置（不同的操作系统浏览器滚动条可能不一样，所有可以根据下面伪类来设置）</p>
+    :horizontal 水平方向的track、track-piect、thumb<br>
+    :vertica 垂直方向的track、track-piect、thumb<br>
+    :decrement 向上和向左按钮的button、向上或向左的track-piece<br>
+    :increment 向下和向右按钮的button、向下和向右的track-piece<br>
+    :start 适用于buttons和track pieces,对象（buttons 或 trace piece）是否放在滑块的前面<br>
+    :end 适用于buttons和track pieces,对象（buttons 或 trace piece）是否放在滑块的后面<br>
+    :double-button 适用于buttons和track pieces，轨道结束的位置是否是一对按钮<br>
+    :single-button 适用于buttons和track pieces，轨道结束的位置是否是一个按钮<br>
+    :no-button 适用于track pieces，轨道结束的位置没有按钮<br>
+    :corner-present 适用于所有scrollbar,滚动条的角落是否存在<br>
+    :window-inactive 适用于所有scrollbar,包含滚动条的区域，焦点不在该窗口的时候<br>
+    :enabled, :disabled, :hover , :active 这些伪类同样适用
+</div>
+
+<div class="link">
+    参考链接: https://segmentfault.com/a/1190000020640796?utm_source=tag-newest
+</div>
+
+<script>
+    const getScrollbarWidth = () => {
+        const container = document.createElement('div')
+        document.body.appendChild(container)
+        container.style.overflow = 'scroll'
+        const inner = document.createElement('div')
+        container.appendChild(inner)
+        const width = container.offsetWidth - inner.offsetWidth
+        document.body.removeChild(container)
+        return width
+    }
+
+    console.log(getScrollbarWidth())
+
+</script>
+
+
+</body>
+</html>
