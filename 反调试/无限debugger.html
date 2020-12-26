@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>无限debugger</title>
+</head>
+<body>
+
+<p id="demo"></p>
+<button onclick="show()">
+    show
+</button>
+
+<script>
+    // 不影响其他js的执行
+    setInterval(() => {
+        debugger
+    }, 100)
+
+    const show = () => {
+        document.getElementById("demo").innerHTML = Date()
+    }
+</script>
+
+</body>
+</html>

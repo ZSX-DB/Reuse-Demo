@@ -4,16 +4,9 @@
 const list = [3, 7, 32, 12, 64]
 
 // 根据索引删除
-const remove = (list, i) => {
-    list.splice(i, 1)
-}
-
-const add = (list, i, data) => {
-    list.splice(i, 0, data)
-}
-
-remove(list, 4)
+list.splice(2, 1)
 console.log(list)
 
-add(list,2, 11)
+// 根据索引添加
+list.splice(1, 0, 86)
 console.log(list)

@@ -30,19 +30,19 @@ const alignGrouping = (arr, attr) => {
     let newList = []
     // keyObj来存取key值，如果没有就生成data, 有的话就匹配然后push
     let keyObj = {}
-    for(let i=0;i<arr.length;i++){
+    for (let i = 0; i < arr.length; i++) {
         let tmp = JSON.parse(JSON.stringify(arr[i]))
         delete tmp[attr]
-        if(!keyObj[arr[i][attr]]){
+        if (!keyObj[arr[i][attr]]) {
             newList.push({
                 attr: arr[i][attr],
                 data: [tmp]
             })
             // 这里 = 后面的值是无意义的，判断主要是通过key值
             keyObj[arr[i][attr]] = attr
-        }else {
-            for(let j = 0;j<newList.length;j++){
-                if(newList[j].attr === arr[i][attr]){
+        } else {
+            for (let j = 0; j < newList.length; j++) {
+                if (newList[j].attr === arr[i][attr]) {
                     newList[j].data.push(tmp)
                 }
             }

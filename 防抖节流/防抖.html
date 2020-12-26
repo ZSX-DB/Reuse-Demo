@@ -7,51 +7,41 @@
 </head>
 <body>
 
-    <p>去抖动，方法是在函数触发时，设定一个周期延迟执行函数，若在周期内函数再次执行、则刷新延迟时间</p>
-    <p>直到最后执行函数，这里函数收集到的结果是最后一次操作的结果</p>
-    <button id="btn" onclick="elseLog()">输出</button>
+<p>去抖动，方法是在函数触发时，设定一个周期延迟执行函数，若在周期内函数再次执行、则刷新延迟时间</p>
+<p>直到最后执行函数，这里函数收集到的结果是最后一次操作的结果</p>
+<button id="btn" onclick="logFn()">输出</button>
 
-    <script>
+<script>
 
-        // 实现功能，但通用性不足
-        // let timer
-        // function log() {
-        //     if(timer){
-        //         clearTimeout(timer)
-        //     }
-        //     timer = setTimeout(()=>{
-        //         console.log('输出')
-        //         timer = void 0
-        //     },1000)
-        // }
+    // 该函数等delay结束才执行
+    // const debounce = (fn, delay, ...args) => {
+    //     let timer = null
+    //     return () => {
+    //         clearTimeout(timer)
+    //         timer = setTimeout(() => {
+    //             fn.apply(this, args)
+    //         }, delay)
+    //     }
+    // }
 
-        // 防抖函数
-        function debounce (method, delay) {
-            let timer = void 0
-            return () => {
-                let self = this
-                let args = arguments
-                timer && clearTimeout(timer)
-                timer = setTimeout(()=> {
-                    method.apply(self, args)
-                    timer = void 0
-                }, delay)
-            }
+    const debounce = (fn, delay, ...args) => {
+        let timer = null
+        return () => {
+            if (timer) clearTimeout(timer)
+            const callNow = !timer
+            timer = setTimeout(() => {
+                timer = null
+            }, delay)
+            if (callNow) fn.apply(this, args)
         }
+    }
 
-        function log() {
-            console.log('输出')
-        }
+    const log = label => {
+        console.log('Log: ', label)
+    }
 
-        let logFn=debounce(log,1000)
+    let logFn = debounce(log, 1000, 'Hello World')
 
-        function elseLog() {
-            logFn()
-
-            // 置于内部不生效
-            // debounce(log,1000)()
-        }
-
-    </script>
+</script>
 </body>
 </html>

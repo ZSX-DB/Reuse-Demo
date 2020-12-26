@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>节流</title>
     <style>
-        .scroll-box{
+        .scroll-box {
             width: 200px;
             height: 1920px;
             background-color: #8fd3f4;
@@ -13,36 +13,113 @@
 </head>
 <body>
 
+<button>
+    LogName
+</button>
+<hr>
+
+<p>搜索显示是一个典型的应用场景</p>
+<label>
+    <input>
+</label>
+<hr>
+
 <p>节流的概念是设定一个周期，周期内只执行一次</p>
 <p>若有新的事件触发则不执行，周期结束后又有新的事件触发开始新的周期</p>
+<p>在vue等框架中可能使用箭头函数会导致this指向的问题，得将箭头函数修改成普通函数</p>
 
 <div class="scroll-box"></div>
 
+
 <script>
-    function throttling (method, wait) {
-        let start, timer
-        return function run () {
-            let self = this
-            let args = arguments
-            if (!start) {
-                start = Date.now()
-            }
-            if (Date.now() - start >= wait) {
-                method.apply(self, args)
-                start = timer = void 0
-            } else {
-                timer && clearTimeout(timer)
-                timer = setTimeout( ()=> {
-                    run.apply(self, args)
-                }, wait)
+
+    // 时间戳实现
+    // const throttle = (fn, delay) => {
+    //   let last = Date.now()
+    //   return (...args)=>{
+    //     let now = Date.now()
+    //     // 超过延迟时间执行
+    //     if(now - last >= delay){
+    //       fn.apply(this, args)
+    //       last = Date.now()
+    //     }
+    //   }
+    // }
+
+    // 优化: 支持传参
+    // const throttle = (fn, delay, ...args) => {
+    //   let last = Date.now()
+    //   return ()=>{
+    //     let now = Date.now()
+    //     // 超过延迟时间执行
+    //     if(now - last >= delay){
+    //       fn.apply(this, args)
+    //       last = Date.now()
+    //     }
+    //   }
+    // }
+
+
+    // 定时器实现
+    const throttle = (fn, delay, ...args) => {
+        let timer = null
+        return () => {
+            if (!timer) {
+                timer = setTimeout(() => {
+                    fn.apply(this, args)
+                    timer = null
+                }, delay)
             }
         }
     }
-    function scroll() {
-        console.log('触发了')
+
+    // function throttle(fn, delay) {
+    //     let timer = null
+    //     return function () {
+    //         if (!timer) {
+    //             timer = setTimeout(() => {
+    //                 fn.apply(this, arguments)
+    //                 timer = null
+    //             }, delay)
+    //         }
+    //     }
+    // }
+
+    const logName = name => {
+        console.log('Name: ', name)
     }
-    document.addEventListener('scroll', throttling(scroll, 2000))
+
+    const scrollFn = (num, text) => {
+        console.log('触发了', num, text)
+    }
+
+    // 按钮的使用方法
+    document.querySelector('button').onclick = throttle(logName, 1000, 'SmartestX')
+    // 滚动事件绑定到全局进行监听
+    document.addEventListener('scroll', throttle(scrollFn, 1000, 3, '节流'))
+
+    const list = [
+        '节流的概念是设定一个周期，周期内只执行一次',
+        '若有新的事件触发则不执行，周期结束后又有新的事件触发开始新的周期',
+        '在vue等框架中可能使用箭头函数会导致this指向的问题，得将箭头函数修改成普通函数'
+    ]
+
+    // 直接传参document.querySelector('input').value无法显示, 如果传固定文本才能获取
+    // const search = val => {
+    //     console.log('Search Value: ', val)
+    //     console.log(list.filter(item => item.includes(val)))
+    // }
+    // document.querySelector('input').onkeyup = throttle(search, 1000, document.querySelector('input').value)
+
+    const search = () => {
+        console.log('Search Value: ', document.querySelector('input').value)
+        console.log(list.filter(item => item.includes(document.querySelector('input').value)))
+    }
+    document.querySelector('input').onkeyup = throttle(search, 1000)
+
+
 </script>
 
 </body>
 </html>
+

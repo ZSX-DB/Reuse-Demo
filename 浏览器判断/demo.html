@@ -25,8 +25,8 @@
             iOS: /iphone/g,
             iPadOS: /ipad/g
         }
-        for(const prop in systemObj){
-            if(testUA(systemObj[prop])){
+        for (const prop in systemObj) {
+            if (testUA(systemObj[prop])) {
                 system = prop
                 break
             }
@@ -35,9 +35,9 @@
         let platform = 'unknown'
         const desktopList = ['windows', 'macOS', 'linux']
         const mobileList = ['android', 'iOS', 'iPadOS']
-        if(desktopList.includes(system)){
+        if (desktopList.includes(system)) {
             platform = 'desktop'
-        }else if(mobileList.includes(system) || testUA(/mobile/g) ){
+        } else if (mobileList.includes(system) || testUA(/mobile/g)) {
             platform = 'mobile'
         }
         // 内核
@@ -73,18 +73,18 @@
                 supporter: 'ie'
             }
         ]
-        for(let i =0;i<list.length;i++){
-            if(testUA(list[i].regular)){
+        for (let i = 0; i < list.length; i++) {
+            if (testUA(list[i].regular)) {
                 kernel = list[i].kernel
                 const sup = list[i].supporter
-                if(typeof sup === 'object'){
-                    for(const prop in sup){
-                        if( sup.hasOwnProperty(prop) && testUA(sup[prop])){
+                if (typeof sup === 'object') {
+                    for (const prop in sup) {
+                        if (sup.hasOwnProperty(prop) && testUA(sup[prop])) {
                             supporter = prop
                             break
                         }
                     }
-                }else {
+                } else {
                     supporter = sup
                 }
                 break
