@@ -1,10 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
     <title>canvas签名</title>
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #canvases {
+            display: block;
+            margin: 10px auto;
+            border: 2px dashed #999;
+        }
+
+        .btn-box {
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn {
+            margin: 0 5px;
+            width: 88px;
+            height: 44px;
+            border: none;
+            outline: none;
+            color: #fff;
+        }
+
+        .danger {
+            background-color: #ee0a24;
+        }
+
+        .danger:active {
+            background-color: #d70920;
+        }
+
+        .primary {
+            background-color: #07c160;
+        }
+
+        .primary:active {
+            background-color: #06ae57;
+        }
+
+    </style>
 </head>
 <body>
+
+<!--canvas默认的大小为300 * 150-->
+<canvas id="canvases" width="300" height="500"></canvas>
+
+<div class="btn-box">
+    <button class="btn danger" onclick="reset()">Reset</button>
+    <button class="btn primary" onclick="logBase64()">LogBase64</button>
+</div>
+
+<script>
+
+    // 获取canvas节点
+    const node = document.querySelector('#canvases')
+    const ctx = node.getContext('2d')
+    // 线宽
+    ctx.lineWidth = 3
+    // 画笔笔触平滑度
+    ctx.smoothness = 80
+    // 颜色
+    ctx.strokeStyle = '#149f5b'
+
+    // pc端
+    node.onmousedown = evt => {
+        ctx.beginPath()
+        ctx.moveTo(evt.clientX - node.offsetLeft, evt.clientY - node.offsetTop)
+
+        document.onmousemove = evt => {
+            ctx.lineTo(evt.clientX - node.offsetLeft, evt.clientY - node.offsetTop)
+            ctx.stroke()
+        }
+
+        document.onmouseup = () => {
+            document.onmousemove = document.onmouseup = null
+        }
+
+    }
+
+    // 移动端
+    node.ontouchstart = evt => {
+        ctx.beginPath()
+        ctx.moveTo(evt.changedTouches[0].clientX - node.offsetLeft, evt.changedTouches[0].clientY - node.offsetTop)
+
+        document.ontouchmove = evt => {
+            ctx.lineTo(evt.changedTouches[0].clientX - node.offsetLeft, evt.changedTouches[0].clientY - node.offsetTop)
+            ctx.stroke()
+        }
+
+        document.ontouchend = () => {
+            document.onmousemove = document.onmouseup = null
+        }
+
+    }
+
+    const reset = () => {
+        node.getContext('2d').clearRect(0, 0, node.width, node.height)
+    }
+
+    const logBase64 = () => {
+        const img = node.toDataURL('image/png')
+        console.log(img)
+    }
+
+
+</script>
 
 </body>
 </html>
