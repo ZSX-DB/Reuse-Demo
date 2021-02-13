@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>全屏滚动</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrapper {
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            font-size: 56px;
+            font-weight: 900;
+            color: #fff;
+            transition: all .4s;
+        }
+
+        .one {
+            background-color: #c94b72;
+        }
+
+        .two {
+            background-color: #cc7832;
+        }
+
+        .three {
+            background-color: #73c991;
+        }
+
+        .four {
+            background-color: #40b6e0;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <div class="page one">Page1</div>
+    <div class="page two">Page2</div>
+    <div class="page three">Page3</div>
+    <div class="page four">Page4</div>
+</div>
+
+<script>
+
+    /**
+     * 实现全屏滚动是通过更改第一个内部的div的margin-top来使得全部div移动
+     * 其核心在于判断鼠标滚轮的方向
+     * ----------------------------------------------------------
+     * chrome和其他浏览器使用onmousewheel
+     * 通过event.wheelDelta判断滚动方向，为正向上滚动，为负向下滚动
+     * ----------------------------------------------------------
+     * firefox使用DOMMouseScroll
+     * 通过event.detail判断滚动方向，为正向下滚动，为负向上滚动
+     * ----------------------------------------------------------
+     * 移动端使用touch事件模拟
+     */
+
+    let cur = 0
+
+    // chrome and else
+    document.body.onmousewheel = evt => {
+        if (evt.wheelDelta > 0 && cur > 0) {
+            cur--
+        } else if (evt.wheelDelta < 0 && cur < 3) {
+            // 上面的3是内部div的数量减去1
+            cur++
+        }
+        const {style, clientHeight} = document.querySelector('.one')
+        style.marginTop = `-${cur * clientHeight}px`
+    }
+
+    // firefox
+    document.body.addEventListener('DOMMouseScroll', evt => {
+        if (evt.detail < 0 && cur > 0) {
+            cur--
+        } else if (evt.detail > 0 && cur < 3) {
+            cur++
+        }
+        const {style, clientHeight} = document.querySelector('.one')
+        style.marginTop = `-${cur * clientHeight}px`
+    })
+
+    // mobile
+    let startY, endY
+
+    document.addEventListener('touchstart', event => {
+        startY = event.touches[0].pageY
+    })
+
+    document.addEventListener('touchend', event => {
+        endY = event.changedTouches[0].pageY
+
+        // 当startY大于endY，向上滑动，反之向下移动
+        if (startY < endY && cur > 0) {
+            cur--
+        } else if (startY > endY && cur < 3) {
+            cur++
+        }
+        const {style, clientHeight} = document.querySelector('.one')
+        style.marginTop = `-${cur * clientHeight}px`
+    })
+
+
+</script>
+
+</body>
+</html>
