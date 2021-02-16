@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
+</head>
+<body>
+
+<fieldset>
+    <legend>axios方式（推荐）</legend>
+
+    <input type="file" accept="*/*" id="upload" multiple>
+
+    <button onclick="upload()">Upload</button>
+
+</fieldset>
+
+<fieldset>
+    <legend>form表单提交（不推荐）</legend>
+
+    <form action="http://localhost:3000/file_upload" enctype="multipart/form-data" method="POST">
+        <input name="file" type="file" multiple>
+        <input type="submit" value="Upload">
+    </form>
+
+</fieldset>
+
+<script>
+
+    const upload = () => {
+        const upload = document.querySelector('#upload')
+
+        const files = new FormData()
+
+        for (const file of upload.files) {
+            files.append(file.name, file)
+        }
+
+        axios({
+            url: 'http://localhost:3000/file_upload',
+            method: 'post',
+            data: files
+        }).then(resp => {
+            console.log(resp)
+        })
+
+    }
+
+</script>
+
+</body>
+</html>
