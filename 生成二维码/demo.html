@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>生成二维码</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/qrcodejs/1.0.0/qrcode.js"></script>
+    <style>
+
+        #qrcode {
+            width: 128px;
+            height: 128px;
+        }
+
+        button {
+            margin: 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+<p>使用了qrcode.js这个库</p>
+<div id="qrcode"></div>
+
+<script>
+
+    new QRCode(document.querySelector('#qrcode'), {
+        text: 'https://www.npmjs.com/package/qrcode',
+        width: 128,
+        height: 128,
+        // 模糊识别级别，H为最高
+        errorCorrectionLevel: 'H'
+    })
+
+</script>
+
+</body>
+</html>

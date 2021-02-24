@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo1</title>
+    <style>
+        #test-img {
+            width: 700px;
+            object-fit: cover
+        }
+
+        button {
+            margin: 5px;
+        }
+
+        #canvas{
+            display: none;
+        }
+
+        #capture-img{
+            width: 400px;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+
+<p>利用canvas实现截图功能</p>
+
+<img src="test.jpg" alt="test" id="test-img">
+<br>
+
+<button onclick="capture()">Capture</button>
+<br>
+
+
+<canvas id="canvas"></canvas>
+
+<img alt="capture-img" src="" id="capture-img">
+
+<script>
+
+    const capture = () => {
+        const testImg = document.querySelector('#test-img')
+
+        // 可以获取图片的尺寸，但此时的尺寸不是图片的原始尺寸
+        // const {width, height} = testImg.getBoundingClientRect()
+
+        // naturalWidth 和 naturalHeight 获取原始尺寸
+        const [width, height] = [testImg.naturalWidth, testImg.naturalHeight]
+
+
+        const canvas = document.querySelector('#canvas')
+        canvas.setAttribute('width', width)
+        canvas.setAttribute('height', height)
+
+        const ctx = canvas.getContext('2d')
+        // image, sx, xy, sWidth, sHeight
+        ctx.drawImage(testImg, 0, 0, width, height)
+
+        const captureImg = document.querySelector('#capture-img')
+        captureImg.src = canvas.toDataURL('image/png')
+
+    }
+
+</script>
+
+</body>
+</html>

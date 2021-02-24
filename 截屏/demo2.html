@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <title>demo2</title>
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        button {
+            margin: 5px;
+        }
+
+        .wrapper {
+            text-align: center;
+        }
+
+        #video {
+            width: 96vw;
+        }
+
+        #canvas {
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="wrapper">
+    <p>截图摄像头画面</p>
+
+    <video id="video" autoplay playsinline></video>
+    <br>
+
+    <button onclick="openCamera()">开启摄像头</button>
+    <br>
+
+    <button onclick="capture()">截屏</button>
+
+    <canvas id="canvas"></canvas>
+
+    <img alt="capture-img" src="" id="capture-img">
+
+</div>
+
+<script>
+    const openCamera = () => {
+        const constraints = {video: {facingMode: ("environment")}}
+
+        navigator.mediaDevices.getUserMedia(constraints)
+            .then(stream => {
+                const video = document.querySelector('#video')
+                window.stream = stream
+                video.srcObject = stream
+                video.onloadedmetadata = () => {
+                    video.play()
+                }
+
+            })
+            .catch(err => {
+                console.error(err)
+            })
+    }
+
+    const capture = () => {
+
+        const video = document.querySelector('#video')
+        console.log(video.width)
+
+        // const testImg = document.querySelector('#test-img')
+        //
+        // // 可以获取图片的尺寸，但此时的尺寸不是图片的原始尺寸
+        // // const {width, height} = testImg.getBoundingClientRect()
+        //
+        // // naturalWidth 和 naturalHeight 获取原始尺寸
+        // const [width, height] = [testImg.naturalWidth, testImg.naturalHeight]
+        //
+        //
+        // const canvas = document.querySelector('#canvas')
+        // canvas.setAttribute('width', width)
+        // canvas.setAttribute('height', height)
+        //
+        // const ctx = canvas.getContext('2d')
+        // // image, sx, xy, sWidth, sHeight
+        // ctx.drawImage(testImg, 0, 0, width, height)
+        //
+        // const captureImg = document.querySelector('#capture-img')
+        // captureImg.src = canvas.toDataURL('image/png')
+    }
+
+</script>
+
+</body>
+</html>
