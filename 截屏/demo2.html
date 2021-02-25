@@ -27,6 +27,11 @@
             display: none;
         }
 
+        #capture-img{
+            width: 100vw;
+            object-fit: cover;
+        }
+
     </style>
 </head>
 <body>
@@ -41,6 +46,7 @@
     <br>
 
     <button onclick="capture()">截屏</button>
+    <br>
 
     <canvas id="canvas"></canvas>
 
@@ -70,27 +76,20 @@
     const capture = () => {
 
         const video = document.querySelector('#video')
-        console.log(video.width)
+        console.log(video.videoWidth, video.videoHeight)
 
-        // const testImg = document.querySelector('#test-img')
-        //
-        // // 可以获取图片的尺寸，但此时的尺寸不是图片的原始尺寸
-        // // const {width, height} = testImg.getBoundingClientRect()
-        //
-        // // naturalWidth 和 naturalHeight 获取原始尺寸
-        // const [width, height] = [testImg.naturalWidth, testImg.naturalHeight]
-        //
-        //
-        // const canvas = document.querySelector('#canvas')
-        // canvas.setAttribute('width', width)
-        // canvas.setAttribute('height', height)
-        //
-        // const ctx = canvas.getContext('2d')
-        // // image, sx, xy, sWidth, sHeight
-        // ctx.drawImage(testImg, 0, 0, width, height)
-        //
-        // const captureImg = document.querySelector('#capture-img')
-        // captureImg.src = canvas.toDataURL('image/png')
+        // videoWidth 和 videoHeight 获取原始尺寸
+        const [width, height] = [video.videoWidth, video.videoHeight]
+
+        const canvas = document.querySelector('#canvas')
+        canvas.setAttribute('width', width)
+        canvas.setAttribute('height', height)
+
+        const ctx = canvas.getContext('2d')
+        ctx.drawImage(video, 0, 0, width, height)
+
+        const captureImg = document.querySelector('#capture-img')
+        captureImg.src = canvas.toDataURL('image/png')
     }
 
 </script>
