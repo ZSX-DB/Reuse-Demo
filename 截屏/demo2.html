@@ -27,7 +27,7 @@
             display: none;
         }
 
-        #capture-img{
+        #capture-img {
             width: 100vw;
             object-fit: cover;
         }
@@ -35,6 +35,9 @@
     </style>
 </head>
 <body>
+
+<!--在移动端chrome或edge中，MediaDevices为{}，UC等国产浏览器无问题-->
+<!--https协议下才能使用MediaDevices-->
 
 <div class="wrapper">
     <p>截图摄像头画面</p>
@@ -76,7 +79,6 @@
     const capture = () => {
 
         const video = document.querySelector('#video')
-        console.log(video.videoWidth, video.videoHeight)
 
         // videoWidth 和 videoHeight 获取原始尺寸
         const [width, height] = [video.videoWidth, video.videoHeight]
