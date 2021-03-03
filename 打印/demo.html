@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+
+        .app {
+            margin: 20px auto;
+            width: 1000px;
+            border: 1px solid #000;
+            text-align: center;
+        }
+
+        .underline {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<p>打印.app内的内容</p>
+<button onclick="printDoc()">打印</button>
+
+<div class="app">
+    <h1>打印功能实现</h1>
+    <p class="underline">文本</p>
+    <code>Print Function Realize</code>
+</div>
+
+<script>
+
+    // 直接调用print会打印无关内容
+    // const printDoc = () => {
+    //     window.print()
+    // }
+
+    const printDoc = () => {
+
+        const iframeDom = document.createElement('iframe')
+        // cloneNode复制节点，当deep为true时会复制子节点
+        const appDom = document.querySelector('.app').cloneNode(true)
+        const styleDom = document.querySelector('style').cloneNode(true)
+
+        // 提前将display设置为none，避免无谓的渲染开销
+        iframeDom.style.display = 'none'
+        // 必须将dom节点添加到文档才能获得 contentDocument 和 contentWindow
+        document.body.appendChild(iframeDom)
+        iframeDom.contentDocument.title = 'iframe标题'
+        iframeDom.contentDocument.body.appendChild(appDom)
+        // style节点必须添加
+        iframeDom.contentDocument.body.appendChild(styleDom)
+        // 打印
+        iframeDom.contentWindow.print()
+        // 删除节点
+        document.body.removeChild(iframeDom)
+    }
+</script>
+
+</body>
+</html>
