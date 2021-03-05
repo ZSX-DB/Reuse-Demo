@@ -4,7 +4,7 @@
 
 // 解决循环引用问题: 额外开辟一个存储空间，来存储当前对象和拷贝对象的对应关系，当需要拷贝当前对象时，先去存储空间中找，有没有拷贝过这个对象
 const clone = (target, wm = new WeakMap()) => {
-    if (typeof target !== 'object') return target
+    if (typeof target !== 'object' || target === null ) return target
     let result = target instanceof Array ? [] : {}
     if (wm.get(target)) return wm.get(target)
     wm.set(target, result)
