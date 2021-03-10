@@ -13,12 +13,10 @@ const arr = [
     }
 ]
 
-const newArr = arr.map(obj => {
-    return {
-        value: obj.id,
-        label: obj.name
-    }
-})
+const newArr = arr.map(obj => ({
+    value: obj.id,
+    label: obj.name
+}))
 
 
 console.log(newArr)

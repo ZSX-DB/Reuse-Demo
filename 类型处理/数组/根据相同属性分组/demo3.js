@@ -25,20 +25,17 @@ const orderList = [
     }
 ]
 
-// reduce api(效率高)
+// 简洁，效率尚可
 const groupingSame = (array, param) => {
-    const reducer = (acc, cur) => {
-        const mark = cur[param]
-        delete cur[param]
-        const target = acc.find(item => item.val === mark)
-        target ? target.children.push(cur) : acc.push({
-            val: mark,
-            children: [cur]
+    const cloneArray = JSON.parse(JSON.stringify(array))
+    const params = [...new Set(array.map(item => item[param]))]
+    return params.map(item => ({
+        val: item,
+        children: cloneArray.filter(i => i[param] === item).map(i => {
+            delete i[param]
+            return i
         })
-        return acc
-    }
-    return JSON.parse(JSON.stringify(array)).reduce(reducer, [])
+    }))
 }
-
 
 console.log(groupingSame(orderList, 'brand'))
