@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue@next"></script>
+</head>
+<body>
+
+<div id="app">
+    <label>
+        <input v-model="keywords" @input="toSearch">
+    </label>
+    <ul>
+        <li v-for="item in result" :key="JSON.stringify(item)">
+            <span v-for="(i,index) in item" :key="index" :style="{color: i.color}">
+                {{ i.label }}
+            </span>
+        </li>
+    </ul>
+</div>
+
+<script>
+
+    const localStore = {
+        data() {
+            return {
+                keywords: '',
+                list: [
+                    '地铁路线图',
+                    '地铁1号线',
+                    '地铁2号线',
+                    '地铁3号线',
+                    '地铁4号线',
+                    '豫园（地铁站）',
+                    '地铁5号站（旧地铁站）',
+                    '其他'
+                ],
+                result: []
+            }
+        },
+        methods: {
+            toSearch() {
+                if (this.keywords === '') {
+                    this.result = []
+                } else {
+                    this.result = this.list
+                        .filter(item => item.includes(this.keywords))
+                        .map(item => {
+                            const res = []
+                            while (item.includes(this.keywords)) {
+                                const idx = item.indexOf(this.keywords)
+                                res.push(item.substring(0, idx), this.keywords)
+                                item = item.substring(idx + this.keywords.length)
+                            }
+                            res.push(item)
+                            return res.map(i => ({
+                                color: i === this.keywords ? '#4387ff' : '#1b1b1b',
+                                label: i
+                            }))
+                        })
+                }
+
+            }
+        }
+    }
+
+    Vue.createApp(localStore).mount('#app')
+
+</script>
+
+</body>
+</html>
