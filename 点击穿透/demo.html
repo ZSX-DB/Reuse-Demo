@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .box {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            border: 1px solid #000;
+        }
+
+        .top {
+            width: 300px;
+            height: 200px;
+            background-color: rgba(255, 0, 0, .3);
+        }
+
+        button {
+            width: 60px;
+            height: 30px;
+        }
+
+        .top-btn {
+            margin: 100px 0 0 72px;
+        }
+
+        .bottom {
+            position: absolute;
+            top: 100px;
+            width: 300px;
+            height: 200px;
+            background-color: rgba(0, 255, 0, .3);
+        }
+
+        .pointer-event{
+            pointer-events: none;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<p>无点击穿透</p>
+<div class="box">
+    <div class="top">
+        <button class="top-btn" onclick="log(0)">Top</button>
+    </div>
+    <div class="bottom">
+        <button onclick="log(1)">Bottom</button>
+    </div>
+</div>
+
+<p>点击穿透</p>
+<div class="box">
+    <div class="top">
+        <button class="top-btn" onclick="log(0)">Top</button>
+    </div>
+    <div class="bottom pointer-event">
+        <button onclick="log(1)">Bottom</button>
+    </div>
+</div>
+
+<script>
+
+    const log = idx => {
+        const list = ['top', 'bottom']
+        console.log(list[idx])
+    }
+
+</script>
+
+</body>
+</html>
