@@ -22,6 +22,8 @@ console.log(getType(undefined))
 console.log(getType(null))
 console.log(getType(Symbol(15)))
 console.log(getType(10n))
+// 可以判断map
+console.log(getType(new Map([['a', 1]])))
 // 可以判断日期
 console.log(getType(new Date()))
 // 可以判断正则
