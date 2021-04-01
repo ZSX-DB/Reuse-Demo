@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>两点画线</title>
+    <style>
+
+        #box {
+            /*线是以相对定位模式定位的*/
+            position: relative;
+            width: 960px;
+            height: 240px;
+            border: 2px solid #f00;
+        }
+
+    </style>
+</head>
+<body>
+
+<!--以box的左下角为(0, 0)起点-->
+<div id="box">
+    <div id="left-line"></div>
+    <div id="right-line"></div>
+</div>
+
+<script>
+
+    const drawLine = (x1, y1, x2, y2) => {
+        const rectX = Math.min(x1, x2)
+        const rectY = Math.min(y1, y2)
+        const rectWidth = Math.abs(x1 - x2)
+        const rectHeight = Math.abs(y1 - y2)
+
+        const width = Math.ceil(Math.sqrt(rectWidth ** 2 + rectHeight ** 2))
+        const height = 2
+
+        const xPad = (rectWidth - width) / 2
+        const yPad = (rectHeight - height) / 2
+
+        const radNum = -Math.atan2((y1 - y2), (x1 - x2))
+
+        return `position: absolute;width: ${width}px;height: ${height}px;background-color: #000;transform: translate(${rectX + xPad}px, ${rectY + yPad}px) rotate(${radNum}rad);`
+
+    }
+
+    document.querySelector('#left-line').style = drawLine(0, 0, 480, 240)
+    document.querySelector('#right-line').style = drawLine(480, 240, 960, 0)
+
+
+</script>
+
+</body>
+</html>
