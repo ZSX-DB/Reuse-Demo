@@ -39,7 +39,7 @@ list.forEach(item => {
 //     return y.total - x.total
 // }
 
-// The better way
+// 上面的表达式可转化成下面
 // const compareFn = (x, y) => {
 //     if (x.total !== y.total) return y.total - x.total
 //     if (x.math !== y.math) return y.math - x.math
@@ -48,16 +48,7 @@ list.forEach(item => {
 // }
 // list.sort(compareFn)
 
-// const multilevelSort = (list, sortKey) => {
-//     const compareFn = (x, y) => {
-//         for(const [key, val] of Object.entries(sortKey)){
-//             if(x[key] !== y[key]) return val === 'DESC' ? y[key] - x[key] : x[key] - y[key]
-//         }
-//     }
-//     list.sort(compareFn)
-//     return list
-// }
-
+// 通用函数
 const multilevelSort = (list, sortKey) => list.sort((x, y) => {
     for (const [key, val] of Object.entries(sortKey)) {
         if (x[key] !== y[key]) return val === 'DESC' ? y[key] - x[key] : x[key] - y[key]
