@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>根据图片url获取尺寸</title>
+</head>
+<body>
+
+<script>
+
+  const getMeta = url => {
+    let img = new Image()
+    img.addEventListener("load", event => {
+      // 如果是非箭头函数可直接用 this.width 和 this.height
+      // 由于 js 生成的img dom没有被压缩，可以不使用 naturalWidth 和 naturalHeight
+      console.log(event.currentTarget.width, event.currentTarget.height)
+    })
+    img.src = url
+    img = null
+  }
+
+  getMeta('https://assets.leetcode.com/uploads/2020/10/06/balance_1.jpg')
+
+</script>
+
+</body>
+</html>
