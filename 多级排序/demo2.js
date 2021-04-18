@@ -1,7 +1,3 @@
-/**
- * 功能优化：可以下一级仍多选排序
- */
-
 const createScore = (stu, cn, math, en) => ({
     stu,
     cn,
@@ -20,29 +16,48 @@ const list = [
     createScore('trump', 150, 7, 150),
     createScore('neo', 88, 150, 69)
 ]
-list.forEach(item => {
-    item.total = item.cn + item.math + item.en
-    item.weight = item.cn + item.en
-})
 
-const multilevelSort = (list, sortKey) => {
-    const getVal = (obj, key) => key.split(' ').reduce((pre, cur) => pre + obj[cur], 0)
-    const setSign = ch => {
-        if (ch === 'DESC') return -1
-        if (ch === 'ASC') return 1
+const nums = [7, -3, 2, 11, 9, 6, -2]
+
+const listSortKey = [
+    {
+        val: v => v.cn + v.math + v.en,
+        order: -1
+    },
+    {
+        val: v => v.math,
+        order: -1
+    },
+    {
+        val: v => v.cn,
+        order: -1
+    },
+    {
+        val: v => v.en,
+        order: -1
+    },
+]
+
+const numsSortKey = [
+    {
+        val: v => v,
+        order: 1
     }
-    const compareFn = (x, y) => {
-        for (const [key, val] of Object.entries(sortKey)) {
-            if (getVal(x, key) !== getVal(y, key)) return (getVal(x, key) - getVal(y, key)) * setSign(val)
-        }
+]
+
+/**
+ * 通用函数
+ * @param sortKey
+ * @returns {function(...[*]=)}
+ */
+const sortBy = sortKey => (x, y) => {
+    for (const {val, order} of sortKey) {
+        if (val(x) !== val(y)) return (val(x) - val(y)) * order
     }
-    return list.sort(compareFn)
 }
 
-// 先根据总成绩排序，再根据 cn 和 en 的成绩和排序
-const sortKey = {
-    'cn math en': 'DESC',
-    'cn en': 'ASC'
-}
+list.sort(sortBy(listSortKey))
+nums.sort(sortBy(numsSortKey))
 
-console.log(multilevelSort(list, sortKey))
+console.log(list)
+console.log(nums)

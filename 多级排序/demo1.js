@@ -26,7 +26,7 @@ list.forEach(item => {
     item.total = item.cn + item.math + item.en
 })
 
-// const compareFn = (x, y) => {
+// list.sort((x, y) => {
 //     if (x.total === y.total) {
 //         if (x.math === y.math) {
 //             if (x.cn === y.cn) {
@@ -37,29 +37,22 @@ list.forEach(item => {
 //         return y.math - x.math
 //     }
 //     return y.total - x.total
-// }
+// })
 
-// 上面的表达式可转化成下面
-// const compareFn = (x, y) => {
-//     if (x.total !== y.total) return y.total - x.total
-//     if (x.math !== y.math) return y.math - x.math
-//     if (x.cn !== y.cn) return y.cn - x.cn
-//     return y.en - x.en
-// }
-// list.sort(compareFn)
-
-// 通用函数
-const multilevelSort = (list, sortKey) => list.sort((x, y) => {
-    for (const [key, val] of Object.entries(sortKey)) {
-        if (x[key] !== y[key]) return val === 'DESC' ? y[key] - x[key] : x[key] - y[key]
-    }
+// 可简写
+list.sort((x, y) => {
+    if (x.total !== y.total) return y.total - x.total
+    if (x.math !== y.math) return y.math - x.math
+    if (x.cn !== y.cn) return y.cn - x.cn
+    return y.en - x.en
 })
 
+// list.sort((x, y) => y.total - x.total)
+//     .sort((x, y) => {
+//         if (x.total === y.total) return y.math - x.math
+//     })
+//     .sort((x, y) => {
+//         if (x.math === y.math) return y.cn - x.cn
+//     })
 
-const sortKey = {
-    total: 'DESC',
-    math: 'DESC',
-    cn: 'DESC',
-    en: 'DESC'
-}
-console.log(multilevelSort(list, sortKey))
+console.log(list)
