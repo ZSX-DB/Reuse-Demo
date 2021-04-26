@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hotspot</title>
+    <style>
+        .bg-box {
+            position: relative;
+            width: 960px;
+            height: 540px;
+            border: 1px solid #000;
+        }
+
+        .hotspot {
+            position: absolute;
+            top: 85px;
+            left: 300px;
+            width: 32px;
+            height: 32px;
+        }
+
+        .backdrop {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #fb1c27;
+            animation-delay: 0.714286s;
+            animation: pulse 4s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0);
+                opacity: 1;
+            }
+            25%, 100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+
+        .icon {
+            width: 32px;
+            height: 32px;
+            user-select: none;
+            cursor: pointer;
+            object-fit: cover;
+            transition: all .2s;
+        }
+
+        .icon:hover {
+            transform: scale(1.5);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="bg-box">
+    <div class="hotspot" onclick="log()">
+        <div class="backdrop"></div>
+        <img src="plain.svg" class="icon" alt="icon">
+    </div>
+</div>
+
+<script>
+
+    const log = () => {
+        console.log('LOG')
+    }
+
+</script>
+
+</body>
+</html>
