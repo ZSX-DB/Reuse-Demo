@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Textarea auto resize based on content</title>
+    <style>
+        .write-box {
+            padding: 12px;
+            width: 630px;
+            min-height: 135px;
+            resize: none;
+            /*只允许在 x 轴 resize*/
+            /*resize: horizontal;*/
+            /*只允许在 y 轴 resize*/
+            /*resize: vertical;*/
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+
+<label>
+    <textarea class="write-box" oninput="inputMsg(event)"></textarea>
+</label>
+
+<script>
+    const inputMsg = event => {
+        // inherit关键字使得元素获取其父元素的计算值
+        event.target.style.height = 'inherit'
+        event.target.style.height = `${event.target.scrollHeight + 3}px`
+    }
+</script>
+
+</body>
+</html>
