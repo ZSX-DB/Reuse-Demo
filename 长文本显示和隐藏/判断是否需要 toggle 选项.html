@@ -3,14 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <title>Demo</title>
+    <style>
+        .box {
+            width: 600px;
+            line-height: 26px;
+        }
+
+        .three-row {
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            word-break: break-word;
+            text-overflow: ellipsis;
+        }
+    </style>
 </head>
 <body>
 
+<div class="box">
+    Windows 10X 提出的众多概念中，唯一也是最难落地的就是基于 App Container 的 Win32 应用程序容器化方案，
+    而这一项也是 Windows 10X 真正为 Windows 带来革命性创新的部分。现在微软说「将会把部分功能带入 Windows 10」
+    Windows 10X（或者说，代号为 Santorini 的 Lite OS）是 Windows Core OS 计划中面向未来二合一、折叠设备这些终端产品的分支，
+    这意味着 Windows 10X 的成功需要 OEM 的鼎力支持。也许是看到了 Windows RT、Windows 10 S 等过往计划的失败，
+    也许是由于世界疫情流行、PC 实现了高速增长……出于各种理由，OEM 对 Windows 10X 的响应是很差的。
+    即使是在两年前「Windows 的未来」的演讲中，真正把饼画得又大又圆的也只有 Surface Neo 这一「参考设计」
+</div>
+
+<button class="toggle-btn" onclick="toggle(0)">
+    Toggle
+</button>
+
+<p> ---------------------------------------------------------------- </p>
+
+<div class="box">
+    Windows 10X 提出的众多概念中，唯一也是最难落地的就是基于 App Container 的 Win32 应用程序容器化方案，
+    而这一项也是 Windows 10X 真正为 Windows 带来革命性创新的部分。现在微软说「将会把部分功能带入 Windows 10」
+    Windows 10X（或者说，代号为 Santorini 的 Lite OS）是 Windows Core OS 计划中面向未来二合一、折叠设备这些终端产品的分支，
+    这意味着 Windows 10X 的成功需要 OEM 的鼎力支持。也许是看到了 Windows RT、Windows 10 S 等过往计划的失败，
+    也许是由于世界疫情流行、PC 实现了高速增长……出于各种理由，OEM 对 Windows 10X 的响应是很差的。
+    即使是在两年前「Windows 的未来」的演讲中，真正把饼画得又大又圆的也只有 Surface Neo 这一「参考设计」
+</div>
+
+<button class="toggle-btn" onclick="toggle(1)">
+    Toggle
+</button>
+
+<p> ---------------------------------------------------------------- </p>
+
+<div class="box">
+    Windows 10X 提出的众多概念中，唯一也是最难落地的就是基于 App Container 的 Win32 应用程序容器化方案，
+    而这一项也是 Windows 10X 真正为 Windows 带来革命性创新的部分。
+</div>
+
+<button class="toggle-btn" onclick="toggle(2)">
+    Toggle
+</button>
+
 <script>
 
-    const getRows = () => {
-
+    const getRows = node => {
+        let clone = node.cloneNode(true)
+        Object.assign(clone.style, {
+            visibility: 'hidden',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            lineHeight: '24px',
+        })
+        document.body.appendChild(clone)
+        const getNum = styleStr => Number(styleStr.replace('px', ''))
+        const {height, lineHeight} = window.getComputedStyle(clone, null)
+        document.body.removeChild(clone)
+        clone = null
+        return Math.ceil(getNum(height) / getNum(lineHeight))
     }
+
+    const toggle = idx => {
+        const boxClassList = document.querySelectorAll('.box')[idx].classList
+        boxClassList.contains('three-row') ? boxClassList.remove('three-row') : boxClassList.add('three-row')
+    }
+
+    const boxes = document.querySelectorAll('.box')
+    const buttons = document.querySelectorAll('.toggle-btn')
+
+    boxes.forEach((node, idx) => {
+        const rows = getRows(node)
+        if (rows > 3) {
+            node.classList.add('three-row')
+        } else {
+            buttons[idx].style.display = 'none'
+        }
+    })
 
 </script>
 
