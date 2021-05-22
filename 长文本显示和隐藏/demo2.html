@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo2</title>
+    <style>
+
+        .box {
+            width: 600px;
+            line-height: 26px;
+        }
+
+        /*使用 -webkit-line-clamp 可以更方便地设置, 但可能有兼容问题, 但至少在 chrome 和 firefox 没有出现*/
+        /*padding 同样会出问题, 如需要, 在套一个 div*/
+        .three-row {
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            word-break: break-word;
+            text-overflow: ellipsis;
+        }
+
+    </style>
+</head>
+<body>
+
+<p>
+    默认显示 3 行
+</p>
+
+<div class="box three-row">
+    Windows 10X 提出的众多概念中，唯一也是最难落地的就是基于 App Container 的 Win32 应用程序容器化方案，
+    而这一项也是 Windows 10X 真正为 Windows 带来革命性创新的部分。现在微软说「将会把部分功能带入 Windows 10」
+    Windows 10X（或者说，代号为 Santorini 的 Lite OS）是 Windows Core OS 计划中面向未来二合一、折叠设备这些终端产品的分支，
+    这意味着 Windows 10X 的成功需要 OEM 的鼎力支持。也许是看到了 Windows RT、Windows 10 S 等过往计划的失败，
+    也许是由于世界疫情流行、PC 实现了高速增长……出于各种理由，OEM 对 Windows 10X 的响应是很差的。
+    即使是在两年前「Windows 的未来」的演讲中，真正把饼画得又大又圆的也只有 Surface Neo 这一「参考设计」
+</div>
+
+<button onclick="toggle()">
+    Toggle
+</button>
+
+<script>
+
+    const toggle = () => {
+        const boxClassList = document.querySelector('.box').classList
+        boxClassList.contains('three-row') ? boxClassList.remove('three-row') : boxClassList.add('three-row')
+    }
+
+</script>
+
+</body>
+</html>
