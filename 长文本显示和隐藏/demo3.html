@@ -2,23 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Demo2</title>
+    <title>Demo</title>
     <style>
 
-        :root{
-            --zoom: .8
+        :root {
+            --zoom: .5;
         }
 
         .box {
-            width: 600px;
-            /*line-height: 26px;*/
-            /*width: calc(600px * var(--zoom));*/
-            /*line-height: calc(26px * var(--zoom));*/
-            line-height: 24px;
+            /*width: 600px;*/
+            width: calc(600px * var(--zoom));
+            line-height: calc(21px * var(--zoom));
         }
 
-        /*使用 -webkit-line-clamp 可以更方便地设置, 但可能有兼容问题, 但至少在 chrome 和 firefox 没有出现*/
-        /*padding 同样会出问题, 如需要, 在套一个 div*/
+        .warning{
+            color: #f62d3d;
+        }
+
         .three-row {
             display: -webkit-box;
             overflow: hidden;
@@ -33,7 +33,22 @@
 <body>
 
 <p>
-    默认显示 3 行
+    获取文本行数
+</p>
+<ol>
+    <li>
+        获取 height
+    </li>
+    <li>
+        获取 line-height
+    </li>
+    <li>
+        计算得出 rows
+    </li>
+</ol>
+
+<p class="warning">
+    注意: 对需要计算 rows 的 div 不要设置 margin 和 padding
 </p>
 
 <div class="box three-row">
@@ -49,14 +64,49 @@
     Toggle
 </button>
 
-<script>
+<button onclick="getRowsSimple(document.querySelector('.box'))">
+    GetRowsSimple
+</button>
 
-    console.log(document.querySelector('.box').clientHeight)
+<button onclick="getRows(document.querySelector('.box'))">
+    GetRows
+</button>
+
+<script>
 
     const toggle = () => {
         const boxClassList = document.querySelector('.box').classList
         boxClassList.contains('three-row') ? boxClassList.remove('three-row') : boxClassList.add('three-row')
-        console.log(document.querySelector('.box').clientHeight)
+    }
+
+    const getRowsSimple = node => {
+        // getComputedStyle 会将 pt rem 等单位转成 px
+        const {height, lineHeight} = window.getComputedStyle(node, null)
+        const getNum = styleStr => Number(styleStr.replace('px', ''))
+        console.log(height, lineHeight)
+        console.log(Math.ceil(getNum(height) / getNum(lineHeight)))
+        return Math.ceil(getNum(height) / getNum(lineHeight))
+    }
+
+    // 通用函数
+    const getRows = node => {
+        let clone = node.cloneNode(true)
+        // visibility 避免用户看到, 脱离文档流避免对滚动条造成影响, 只有 line-height 为 4 的倍数 height 才是整数
+        Object.assign(clone.style, {
+            visibility: 'hidden',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            lineHeight: '24px',
+        })
+        document.body.appendChild(clone)
+        const getNum = styleStr => Number(styleStr.replace('px', ''))
+        const {height, lineHeight} = window.getComputedStyle(clone, null)
+        document.body.removeChild(clone)
+        clone = null
+        console.log(height, lineHeight)
+        console.log(Math.ceil(getNum(height) / getNum(lineHeight)))
+        return Math.ceil(getNum(height) / getNum(lineHeight))
     }
 
 </script>
