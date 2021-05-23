@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <style>
+
+        .area {
+            position: relative;
+            width: 400px;
+            height: 400px;
+            border: 1px solid #f00;
+        }
+
+        .box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #2fbf3d;
+            cursor: pointer;
+            user-select: none;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<div class="area">
+    <div class="box" style="left: 0;top: 0;" onclick="console.log('first')">
+        1
+    </div>
+    <div class="box" style="left: 100px;top: 100px;" onclick="console.log('second')">
+        2
+    </div>
+    <div class="box" style="left: 200px;top: 200px;" onclick="console.log('third')">
+        3
+    </div>
+</div>
+
+<button onclick="addBox()">
+    Add Box
+</button>
+
+<script>
+
+    // 对范围进行限定, 避免超出
+    const setScopeX = x => {
+        if (x > 370) return 370
+        if (x < 0) return 0
+        return x
+    }
+
+    const setScopeY = y => {
+        if (y > 370) return 370
+        if (y < 0) return 0
+        return y
+    }
+
+    // 获取圆心之间的距离
+    const getDistance = (coordinateA, coordinateB) => {
+        const [aX, aY] = coordinateA
+        const [bX, bY] = coordinateB
+        return Math.sqrt((aX - bX) ** 2 + (aY - bY) ** 2)
+    }
+
+    const boxes = document.querySelectorAll('.box')
+
+    boxes.forEach(box => {
+        box.onmousedown = () => {
+
+            document.onmousemove = event => {
+                box.style.left = `${setScopeX(event.pageX - 15)}px`
+                box.style.top = `${setScopeY(event.pageY - 15)}px`
+            }
+
+            document.onmouseup = () => {
+                document.onmousemove = null
+                document.onmouseup = null
+                // 阻止默认事件
+                return false
+            }
+
+        }
+    })
+
+    const addBox = () => {
+        const newBox = document.createElement('div')
+        newBox.classList.add('box')
+        document.querySelector('.area').appendChild(newBox)
+        document.querySelectorAll('.box').forEach((box, idx) => {
+            box.style.left = `${30 * idx}px`
+            box.style.top = '0'
+        })
+    }
+
+</script>
+
+</body>
+</html>
