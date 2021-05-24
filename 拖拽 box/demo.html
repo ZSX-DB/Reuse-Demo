@@ -7,6 +7,7 @@
 
         .area {
             position: relative;
+            margin: 200px auto;
             width: 400px;
             height: 400px;
             border: 1px solid #f00;
@@ -25,40 +26,59 @@
             user-select: none;
         }
 
+        .btn {
+            display: block;
+            margin: 0 auto;
+        }
 
     </style>
 </head>
 <body>
 
 <div class="area">
-    <div class="box" style="left: 0;top: 0;" onclick="console.log('first')">
+    <div class="box" style="left: 0;top: 0;">
         1
     </div>
-    <div class="box" style="left: 100px;top: 100px;" onclick="console.log('second')">
+    <div class="box" style="left: 100px;top: 100px;">
         2
     </div>
-    <div class="box" style="left: 200px;top: 200px;" onclick="console.log('third')">
+    <div class="box" style="left: 200px;top: 200px;">
         3
     </div>
 </div>
 
-<button onclick="addBox()">
+<button class="btn" onclick="addBox()">
     Add Box
 </button>
 
 <script>
 
-    // 对范围进行限定, 避免超出
-    const setScopeX = x => {
-        if (x > 370) return 370
-        if (x < 0) return 0
-        return x
+    /**
+     * 获取 element 相对于 document 的 left 和 top
+     * @param {*} element
+     */
+    const getElePosition = element => {
+        let eleLeft = element.offsetLeft
+        let eleTop = element.offsetTop
+        let current = element.offsetParent
+
+        while (current !== null) {
+            eleLeft += current.offsetLeft
+            eleTop += current.offsetTop
+            current = current.offsetParent
+        }
+
+        return {
+            eleLeft,
+            eleTop
+        }
     }
 
-    const setScopeY = y => {
-        if (y > 370) return 370
-        if (y < 0) return 0
-        return y
+    // 对范围进行限定, 避免超出
+    const setScope = (position, maxSize) => {
+        if (position < 0) return 0
+        if (position > maxSize) return maxSize
+        return position
     }
 
     // 获取圆心之间的距离
@@ -68,25 +88,40 @@
         return Math.sqrt((aX - bX) ** 2 + (aY - bY) ** 2)
     }
 
-    const boxes = document.querySelectorAll('.box')
+    const {eleLeft, eleTop} = getElePosition(document.querySelector('.area'))
 
-    boxes.forEach(box => {
-        box.onmousedown = () => {
+    const addDragEvent = () => {
+        document.querySelectorAll('.box').forEach(box => {
+            box.onmousedown = () => {
 
-            document.onmousemove = event => {
-                box.style.left = `${setScopeX(event.pageX - 15)}px`
-                box.style.top = `${setScopeY(event.pageY - 15)}px`
+                document.onmousemove = event => {
+                    // pageX 和 pageY 值是相对于 document 而言
+                    box.style.left = `${setScope(event.pageX - eleLeft - 15, 370)}px`
+                    box.style.top = `${setScope(event.pageY - eleTop - 15, 370)}px`
+                }
+
+                document.onmouseup = () => {
+                    document.onmousemove = null
+                    document.onmouseup = null
+                    // 阻止默认事件
+                    return false
+                }
+
             }
+        })
+    }
 
-            document.onmouseup = () => {
-                document.onmousemove = null
-                document.onmouseup = null
-                // 阻止默认事件
-                return false
-            }
+    const addClickEvent = () => {
+        document.querySelectorAll('.box').forEach((box, idx) => {
+            box.addEventListener('click', () => {
+                // 在 vue 或 react 中, 设置当前操作索引来触发对应事件, 如 this.cur = idx 或 setCur(idx)
+                console.log(`index is ${idx}`)
+            })
+        })
+    }
 
-        }
-    })
+    addDragEvent()
+    addClickEvent()
 
     const addBox = () => {
         const newBox = document.createElement('div')
@@ -96,6 +131,8 @@
             box.style.left = `${30 * idx}px`
             box.style.top = '0'
         })
+        addDragEvent()
+        addClickEvent()
     }
 
 </script>
