@@ -7,19 +7,18 @@
  * - 匹配 HTML Entities (其有两种表示方法, &entity_name; &#entity_number;)
  *   通常 richText 为了区别于 html 标签, 如 1 + 1 < 2 会变成 1 + 1 &lt; 2
  *   2 - 5 的 string 和 1 - 4 的 number 基本能匹配大多数情况
- * @param html {string}
+ * @param richText {string}
  * @returns {number}
  */
-
-const getPlainTextLen = html => html
+const getPlainTextLen = richText => richText
     .replace(/<[^>]+>/g, '')
     .replace(/ |\n|\r\n|&nbsp;/g, '')
     .replace(/[a-zA-Z]&#7([6-7][0-9]);/g, ' ')
-    .replace( /&([a-z]{2,5}|#[0-9]{1,4});/g, ' ')
+    .replace(/&([a-z]{2,5}|#[0-9]{1,4});/g, ' ')
     .length
 
 
-// 长度为 5 + 8 + 4 + 10 + 11 + 5 + 3 + 4
+// 长度为 5 + 8 + 4 + 10 + 11 + 5 + 3 + 4 = 50
 const html =
     `<h1>Title</h1>
      <h2>subtitle</h2>
