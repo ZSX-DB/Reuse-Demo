@@ -12,13 +12,13 @@
  */
 const getPlainTextLen = richText => richText
     .replace(/<[^>]+>/g, '')
-    .replace(/ |\n|\r\n|&nbsp;/g, '')
+    .replace(/ |\n|\r\n|&nbsp;|&ensp;/g, '')
     .replace(/[a-zA-Z]&#7([6-7][0-9]);/g, ' ')
-    .replace(/&([a-z]{2,5}|#[0-9]{1,4});/g, ' ')
+    .replace(/&([a-z]{2,5}|#[0-9]{1,6});/g, ' ')
     .length
 
 
-// 长度为 5 + 8 + 4 + 10 + 11 + 5 + 3 + 4 = 50
+// 长度为 5 + 8 + 4 + 10 + 11 + 5 + 3 + 4 + 1 = 51
 const html =
     `<h1>Title</h1>
      <h2>subtitle</h2>
@@ -30,7 +30,8 @@ const html =
        <li> Second&nbsp;block </li>
        <li> 1 + 1 &lt; 3 </li>
        <li> 5 &#62; 3 </li>
-       <li> 100 &#8364; </li>
+       <li> 1&ensp;00 &#8364; </li>
+       <li> &#128512; </li>
      </ul>`
 
 console.log(getPlainTextLen(html))
