@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <style>
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            height: 66px;
+            font-size: 25px;
+            font-weight: 300;
+            border-bottom: 1px solid #f0f0f0;
+            box-sizing: border-box;
+        }
+
+        main {
+            position: relative;
+            height: calc(100vh - 66px);
+        }
+
+        .left-box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            /* 由 calc((100vw - 10px) / 2) 简化而来*/
+            width: calc(50vw - 5px);
+            height: 100%;
+            padding: 10px;
+            /*border: 1px solid #2fbf3d;*/
+            box-sizing: border-box;
+        }
+
+        .resize-bar {
+            display: grid;
+            place-items: center;
+            position: absolute;
+            top: 0;
+            left: calc(50vw - 5px);
+            width: 10px;
+            height: 100%;
+            cursor: col-resize;
+            background-color: #f7f7f7;
+            /*transition: all .3s;*/
+        }
+
+        .resize-bar:hover {
+            background-color: #d9d9d9;
+        }
+
+        .dot {
+            margin-bottom: 5px;
+            width: 4px;
+            height: 4px;
+            background-color: #bfbfbf;
+            /*transition: all .3s;*/
+        }
+
+        .resize-bar:hover .dot {
+            background-color: #fff;
+        }
+
+        .right-box {
+            position: absolute;
+            top: 0;
+            left: calc(50vw + 5px);
+            padding: 10px;
+            width: calc(50vw - 5px);
+            height: 100%;
+            /*border: 1px solid #40b6e0;*/
+            box-sizing: border-box;
+        }
+
+    </style>
+</head>
+<body>
+
+<header>
+    Header
+</header>
+
+<main>
+    <div class="left-box">
+        left box left box left box left box left box left box
+        left box left box left box left box left box left box
+        left box left box left box left box left box left box
+    </div>
+    <div class="resize-bar">
+        <div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+    <div class="right-box">
+        right box right box right box right box right box right box
+        right box right box right box right box right box right box
+        right box right box right box right box right box right box
+    </div>
+</main>
+
+<script>
+
+    const resizeBar = document.querySelector('.resize-bar')
+    const leftBox = document.querySelector('.left-box')
+    const rightBox = document.querySelector('.right-box')
+
+    const throttle = (fn, delay, ...args) => {
+        let timer = null
+        return () => {
+            if (!timer) {
+                timer = setTimeout(() => {
+                    fn.apply(this, args)
+                    timer = null
+                }, delay)
+            }
+        }
+    }
+
+
+    resizeBar.addEventListener('mousedown', () => {
+        document.onmousemove = event => {
+            console.log('move')
+            const handle = () => {
+                console.log('ssss')
+                resizeBar.style.left = `${event.pageX}px`
+                leftBox.style.width = `${event.pageX}px`
+                rightBox.style.left = `${event.pageX + 10}px`
+                rightBox.style.width = `calc(100vw - ${event.pageX + 10}px)`
+            }
+            // resizeBar.style.left = `${event.pageX}px`
+            // leftBox.style.width = `${event.pageX}px`
+            // rightBox.style.left = `${event.pageX + 10}px`
+            // rightBox.style.width = `calc(100vw - ${event.pageX + 10}px)`
+            const fn = throttle(handle, 100)
+            fn()
+        }
+
+        document.onmouseup = () => {
+            console.log('up')
+            document.onmousemove = null
+            document.onmouseup = null
+            return false
+        }
+    })
+
+    // document.onmouseup = () => {
+    //     console.log('up')
+    //     document.onmousemove = null
+    //     document.onmouseup = null
+    //     return false
+    // }
+
+</script>
+
+</body>
+</html>
