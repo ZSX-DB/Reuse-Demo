@@ -7,10 +7,11 @@
 
         .box {
             width: 600px;
-            line-height: 21px;
+            font-size: 13px;
+            line-height: 18px;
         }
 
-        .warning{
+        .warning {
             color: #f62d3d;
         }
 
@@ -85,6 +86,7 @@
 
     // 通用函数
     const getRows = node => {
+        const {width, fontSize} = window.getComputedStyle(node, null)
         let clone = node.cloneNode(true)
         // visibility 避免用户看到, 脱离文档流避免对滚动条造成影响, 只有 line-height 为 4 的倍数 height 才是整数
         Object.assign(clone.style, {
@@ -92,6 +94,8 @@
             position: 'absolute',
             top: 0,
             left: 0,
+            width,
+            fontSize,
             lineHeight: '24px',
         })
         document.body.appendChild(clone)
@@ -100,9 +104,41 @@
         document.body.removeChild(clone)
         clone = null
         console.log(height, lineHeight)
-        console.log(Math.ceil(getNum(height) / getNum(lineHeight)))
-        return Math.ceil(getNum(height) / getNum(lineHeight))
+        console.log(getNum(height) / getNum(lineHeight))
+        return getNum(height) / getNum(lineHeight)
     }
+
+    // 并不是获取文本行数时 dom 已经构建好
+    const getRowsByText = text => {
+        let node = document.createElement('div')
+        Object.assign(node.style, {
+            visibility: 'hidden',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            // width 和 fontSize 根据 UI 编写，lineHeight 固定为 24px
+            width: '600px',
+            fontSize: '13px',
+            lineHeight: '24px'
+        })
+        node.appendChild(document.createTextNode(text))
+        document.body.appendChild(node)
+        const {height} = window.getComputedStyle(node, null)
+        const rows = Number(height.replace('px', '')) / 24
+        document.body.removeChild(node)
+        node = null
+        return rows
+    }
+
+    const text = `
+    Windows 10X 提出的众多概念中，唯一也是最难落地的就是基于 App Container 的 Win32 应用程序容器化方案，
+    而这一项也是 Windows 10X 真正为 Windows 带来革命性创新的部分。现在微软说「将会把部分功能带入 Windows 10」
+    Windows 10X（或者说，代号为 Santorini 的 Lite OS）是 Windows Core OS 计划中面向未来二合一、折叠设备这些终端产品的分支，
+    这意味着 Windows 10X 的成功需要 OEM 的鼎力支持。也许是看到了 Windows RT、Windows 10 S 等过往计划的失败，
+    也许是由于世界疫情流行、PC 实现了高速增长……出于各种理由，OEM 对 Windows 10X 的响应是很差的。
+    即使是在两年前「Windows 的未来」的演讲中，真正把饼画得又大又圆的也只有 Surface Neo 这一「参考设计」`
+
+    console.log('GetRowsByText', getRowsByText(text))
 
 </script>
 

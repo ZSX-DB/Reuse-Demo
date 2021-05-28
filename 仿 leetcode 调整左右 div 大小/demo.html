@@ -114,35 +114,13 @@
     const leftBox = document.querySelector('.left-box')
     const rightBox = document.querySelector('.right-box')
 
-    const throttle = (fn, delay, ...args) => {
-        let timer = null
-        return () => {
-            if (!timer) {
-                timer = setTimeout(() => {
-                    fn.apply(this, args)
-                    timer = null
-                }, delay)
-            }
-        }
-    }
-
-
     resizeBar.addEventListener('mousedown', () => {
         document.onmousemove = event => {
             console.log('move')
-            const handle = () => {
-                console.log('ssss')
-                resizeBar.style.left = `${event.pageX}px`
-                leftBox.style.width = `${event.pageX}px`
-                rightBox.style.left = `${event.pageX + 10}px`
-                rightBox.style.width = `calc(100vw - ${event.pageX + 10}px)`
-            }
-            // resizeBar.style.left = `${event.pageX}px`
-            // leftBox.style.width = `${event.pageX}px`
-            // rightBox.style.left = `${event.pageX + 10}px`
-            // rightBox.style.width = `calc(100vw - ${event.pageX + 10}px)`
-            const fn = throttle(handle, 100)
-            fn()
+            resizeBar.style.left = `${event.pageX}px`
+            leftBox.style.width = `${event.pageX}px`
+            rightBox.style.left = `${event.pageX + 10}px`
+            rightBox.style.width = `calc(100vw - ${event.pageX + 10}px)`
         }
 
         document.onmouseup = () => {
@@ -152,13 +130,6 @@
             return false
         }
     })
-
-    // document.onmouseup = () => {
-    //     console.log('up')
-    //     document.onmousemove = null
-    //     document.onmouseup = null
-    //     return false
-    // }
 
 </script>
 
