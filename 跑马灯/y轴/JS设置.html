@@ -5,11 +5,11 @@
     <title>JS设置</title>
     <style>
 
-        body{
+        body {
             background-color: #2fbf3d;
         }
 
-        .box{
+        .box {
             /*overflow: hidden;*/
             margin-top: 200px;
             width: 500px;
@@ -22,7 +22,7 @@
 
         }
 
-        .item{
+        .item {
             padding-left: 10px;
             line-height: 40px;
             color: #fff;
@@ -45,27 +45,27 @@
 <script>
 
     // 使用方法，必须是一组连续的height相同的div，最好是同一类名，且必须指定数量
-    function runYMarquee(firstNode, nodeNum, initMarginTop, step = 1, time = 20) {
+    const runYMarquee = (firstNode, nodeNum, initMarginTop, step = 1, time = 20) => {
         let ch = firstNode.clientHeight
 
         const start = marginTop => {
             let mt = marginTop
-            let interval = setInterval(()=>{
+            let interval = setInterval(() => {
                 // 判断不是第一项和最后一项
-                if(Number.isInteger(mt/ch) && mt !== marginTop && mt !== - (ch * nodeNum) ){
+                if (Number.isInteger(mt / ch) && mt !== marginTop && mt !== -(ch * nodeNum)) {
                     clearInterval(interval)
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         start(mt)
                     }, 1000)
-                }else if(mt === - (ch * nodeNum)){
+                } else if (mt === -(ch * nodeNum)) {
                     // 到达最后一项，归零
                     clearInterval(interval)
                     // 恢复原来的位置
                     firstNode.style.marginTop = '0'
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         start(0)
-                    },1000)
-                }else {
+                    }, 1000)
+                } else {
                     // 如果是start的第一个执行此项
                     mt -= step
                     firstNode.style.marginTop = `${mt}px`
@@ -73,7 +73,7 @@
             }, time)
         }
 
-        setTimeout(()=>{
+        setTimeout(() => {
             start(initMarginTop)
         }, 1000)
 
@@ -82,8 +82,8 @@
     let i = document.querySelector('.item')
     runYMarquee(i, 4, 0)
 
-    function log(num) {
-        console.log(num)
+    const log = flag => {
+        console.log(flag)
     }
 
 </script>

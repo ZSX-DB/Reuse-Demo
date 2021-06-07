@@ -5,11 +5,11 @@
     <title>JS优化</title>
     <style>
 
-        body{
+        body {
             background-color: #2fbf3d;
         }
 
-        .box{
+        .box {
             overflow: hidden;
             margin-top: 200px;
             width: 500px;
@@ -17,7 +17,7 @@
             background-color: #000;
         }
 
-        .item{
+        .item {
             display: flex;
             align-items: center;
             padding-left: 10px;
@@ -48,7 +48,7 @@
     // 优化项: 1、自动添加子节点
     //        2、translateY性能优化
 
-    function runMarquee(node, step = 1, time = 20, stopTime = 1000) {
+    const runMarquee = (node, step = 1, time = 20, stopTime = 1000) => {
         // 最后追加子节点
         let firstNode = node.children[0]
         let newNode = firstNode.cloneNode(true)
@@ -64,40 +64,40 @@
         const start = initTY => {
             // 初始化translateY
             let ty = initTY
-            let interval = setInterval(()=>{
+            let interval = setInterval(() => {
                 // 判断不是第一项或最后一项
-                if(Number.isInteger(ty / cnh) && ty !== initTY && ty !== -lastHeight ){
+                if (Number.isInteger(ty / cnh) && ty !== initTY && ty !== -lastHeight) {
                     clearInterval(interval)
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         start(ty)
                     }, stopTime)
-                }else if(ty === -lastHeight){
+                } else if (ty === -lastHeight) {
                     clearInterval(interval)
                     node.style.transform = `translateY(0)`
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         start(0)
-                    },stopTime)
-                }else {
+                    }, stopTime)
+                } else {
                     ty -= step
                     node.style.transform = `translateY(${ty}px)`
                 }
             }, time)
         }
 
-        setTimeout(()=>{
+        setTimeout(() => {
             start(0)
         }, stopTime)
 
     }
 
-    function run(){
+    const run = () => {
         // 外部box的高度必须与item相同
         // step必须能被item的高度整除
         runMarquee(document.querySelector('#marquee-box'))
     }
 
-    function log(num) {
-        console.log(num)
+    const log = flag => {
+        console.log(flag)
     }
 
 </script>
