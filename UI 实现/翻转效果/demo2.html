@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <style>
+
+        .card {
+            position: relative;
+            width: 223px;
+            height: 400px;
+            transform-style: preserve-3d;
+            cursor: pointer;
+            transition: all 1s;
+        }
+
+        .rotate-y-180 {
+            transform: rotateY(180deg)
+        }
+
+        .front, .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+        }
+
+        .front {
+            background-image: url('images/playing card.png');
+        }
+
+        .back {
+            background-color: #e8e7ec;
+            transform: rotateY(180deg);
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="card" onclick="flip()">
+    <div class="front"></div>
+    <div class="back"></div>
+</div>
+
+<script>
+
+    const flip = () => {
+        const card = document.querySelector('.card').classList
+        card.contains('rotate-y-180') ? card.remove('rotate-y-180') : card.add('rotate-y-180')
+    }
+
+</script>
+
+</body>
+</html>
