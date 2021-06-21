@@ -1,3 +1,4 @@
+// 目前只能绑定同步函数
 const reset = () => {
     console.log('reset')
 }
