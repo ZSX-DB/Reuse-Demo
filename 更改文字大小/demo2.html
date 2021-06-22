@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo2</title>
+    <style>
+
+        .font-size-icon {
+            padding: 3px;
+            cursor: pointer;
+        }
+
+        .font-size-icon:hover {
+            border-radius: 5px;
+            background-color: #dcdcdc;
+        }
+
+        .set-14 {
+            width: 28px;
+        }
+
+        .set-16 {
+            width: 32px;
+        }
+
+        .set-18 {
+            width: 36px;
+        }
+
+        .text-box {
+            /*实现首行空 2 个文字*/
+            text-indent: 2em;
+            width: 400px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div>
+    <img src="image/font-size.svg" class="font-size-icon set-14" alt="14px" onclick="set14()">
+    <img src="image/font-size.svg" class="font-size-icon set-16" alt="16px" onclick="set16()">
+    <img src="image/font-size.svg" class="font-size-icon set-18" alt="18px" onclick="set18()">
+</div>
+
+<p class="text-box">
+    刘慈欣（Cixin Liu），1963年6月出生于北京，祖籍河南省信阳市罗山，山西人，本科学历，高级工程师，科幻作家，中国作家协会会员、第九届全委会委员，
+    中国科普作家协会会员，山西省作家协会副主席，阳泉市作家协会副主席，同时也是中国科幻小说代表作家之一。
+</p>
+
+<script>
+
+    const set14 = () => {
+        document.body.style.fontSize = '14px'
+    }
+    const set16 = () => {
+        document.body.style.fontSize = '16px'
+    }
+    const set18 = () => {
+        document.body.style.fontSize = '18px'
+    }
+
+
+</script>
+
+</body>
+</html>
