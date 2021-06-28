@@ -6,7 +6,7 @@ const queryToStr = query => {
     return str.substring(0, str.length - 1)
 }
 
-const strToQuery = str => str.substring(1, str.length).split('&').reduce((total, item) => {
+const strToQuery = str => str.substring(1).split('&').reduce((total, item) => {
     const [key, val] = item.split('=')
     total[key] = val
     return total
