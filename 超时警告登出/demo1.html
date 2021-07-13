@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1></h1>
+<hr>
+<p></p>
+
+<button onclick="login()">login</button>
+
+<script>
+
+    const p = document.querySelector('p')
+    const h1 = document.querySelector('h1')
+
+    // 如果鼠标移动算操作的情况下，可以通过监听鼠标和点击事件
+    const timer = new Proxy(
+        {
+            val: 0
+        },
+        {
+            get(target, key) {
+                return target[key]
+            },
+            set(target, key, value) {
+                target[key] = value
+                if (target.val === 20) {
+                    p.innerText = 'Warning'
+                } else if (target.val >= 30) {
+                    p.innerText = 'Log out'
+                    clearInterval(interval)
+                }
+            }
+        }
+    )
+
+    const render = () => {
+        h1.innerText = timer.val
+    }
+
+    const login = () => {
+        interval = setInterval(() => {
+            timer.val = timer.val + 1
+            render()
+        }, 300)
+    }
+
+    render()
+
+    let interval = setInterval(() => {
+        timer.val = timer.val + 1
+        render()
+    }, 300)
+
+    document.addEventListener('mouseup', () => {
+        timer.val = 0
+        render()
+    })
+
+    document.addEventListener('mousemove', () => {
+        timer.val = 0
+        render()
+    })
+
+    document.addEventListener('mousedown', () => {
+        timer.val = 0
+        render()
+    })
+
+    document.addEventListener('touchstart', () => {
+        timer.val = 0
+        render()
+    })
+
+    document.addEventListener('touchmove', () => {
+        timer.val = 0
+        render()
+    })
+
+    document.addEventListener('touchend', () => {
+        timer.val = 0
+        render()
+    })
+
+
+</script>
+
+</body>
+</html>
