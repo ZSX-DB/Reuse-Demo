@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <style>
+        .input-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 144px;
+            height: 30px;
+            border: 1px solid #000;
+        }
+
+        #toggle-input {
+            width: 120px;
+            height: 28px;
+            border: none;
+            outline: none;
+        }
+
+        /*使用 ms-reveal 关闭 eye icon*/
+        #toggle-input::-ms-reveal {
+            display: none;
+        }
+
+        .toggle-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+<!--有的浏览器不会出现 eye 图标，有的则只出现一次，因此要单独控制-->
+<div class="input-box">
+    <label>
+        <input id="toggle-input" type="password"/>
+    </label>
+    <div class="toggle-icon" onclick="toggle()">
+        <img id="on" src="eye_on.svg" alt="eye_on">
+        <img id="off" src="eye_off.svg" alt="eye_off" style="display: none">
+    </div>
+</div>
+
+<script>
+
+    const toggle = () => {
+        const input = document.querySelector('#toggle-input')
+        const on = document.querySelector('#on')
+        const off = document.querySelector('#off')
+        if (input.type === 'password') {
+            input.type = 'text'
+            on.style.display = 'none'
+            off.style.display = ''
+        } else {
+            input.type = 'password'
+            on.style.display = ''
+            off.style.display = 'none'
+        }
+    }
+
+</script>
+
+</body>
+</html>
