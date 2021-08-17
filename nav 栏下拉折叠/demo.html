@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            margin-bottom: 20px;
+            padding: 80px 20px;
+            width: 100%;
+            background-color: #f1f1f1;
+            transition: all .5s;
+        }
+
+        #logo {
+            font-size: 35px;
+        }
+
+        main {
+            margin-top: 220px;
+            width: 100%;
+            height: 1100px;
+        }
+
+        #headline {
+            padding: 24px;
+            font-size: 38px;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+
+<nav>
+    <span id="logo">CompanyLogo</span>
+</nav>
+
+<main>
+    <div id="headline">headline</div>
+</main>
+
+<script>
+    const nav = document.querySelector('nav')
+    const logo = document.querySelector('#logo')
+    window.addEventListener('scroll', () => {
+        if (document.body.scrollTop > 65 || document.documentElement.scrollTop > 65) {
+            nav.style.padding = '30px 10px'
+            logo.style.fontSize = '25px'
+        } else {
+            nav.style.padding = '80px 20px'
+            logo.style.fontSize = '35px'
+        }
+    })
+
+</script>
+
+</body>
+</html>
