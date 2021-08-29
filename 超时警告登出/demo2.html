@@ -6,7 +6,93 @@
 </head>
 <body>
 
-// 应该获取最新的时间相减
+<button onclick="logon()">
+    LOGON
+</button>
+
+<script>
+    let activeTimer
+    const getMinute = tsDiff => Math.floor(tsDiff / 1000 / 60)
+
+    const logon = () => {
+        let logonTimer = new Date().valueOf()
+        activeTimer = new Date().valueOf()
+        sessionStorage.setItem('logonTimer', String(logonTimer))
+        listenLogon(logonTimer)
+        listenActivity()
+    }
+
+    const logout = () => {
+        console.log('Forced to log out')
+        sessionStorage.removeItem('logonTimer')
+    }
+
+    document.addEventListener('load', () => {
+        console.log('load')
+        if (sessionStorage.getItem('logonTimer')) {
+            listenLogon(Number(sessionStorage.getItem('logonTimer')))
+        }
+    })
+
+    const handleActivity = () => {
+        activeTimer = new Date().valueOf()
+    }
+
+    const handleActivityEvent = () => {
+        document.addEventListener('mouseup', handleActivity)
+        document.addEventListener('mousemove', handleActivity)
+        document.addEventListener('mousedown', handleActivity)
+        document.addEventListener('touchstart', handleActivity)
+        document.addEventListener('touchmove', handleActivity)
+        document.addEventListener('touchend', handleActivity)
+        window.addEventListener('beforeunload', () => {
+            // 避免频繁对 IO 进行操作
+            sessionStorage.setItem('activeTimer', String(activeTimer))
+        })
+    }
+
+    handleActivityEvent()
+
+    /**
+     * 50 分钟弹出警告，60 分钟强制退出
+     * @param logonTimer {number}
+     */
+    const listenLogon = (logonTimer) => {
+        const currTimer = new Date().valueOf()
+        requestAnimationFrame(() => {
+            if (getMinute(currTimer - logonTimer) < 50) {
+                listenLogon(logonTimer)
+                console.log('Logon Normal', getMinute(currTimer - logonTimer), currTimer - logonTimer)
+            } else if (getMinute(currTimer - logonTimer) < 60) {
+                listenLogon(logonTimer)
+                console.log('Logon Warning', getMinute(currTimer - logonTimer), currTimer - logonTimer)
+            } else {
+                // 执行强制登出操作
+                logout()
+            }
+        })
+    }
+
+    /**
+     * 无操作时 4 分钟弹出警告，5 分钟强制退出
+     */
+    const listenActivity = () => {
+        const currTimer = new Date().valueOf()
+        requestAnimationFrame(() => {
+            if (getMinute(currTimer - activeTimer) < 4) {
+                listenActivity()
+                console.log('Activity Normal', getMinute(currTimer - activeTimer), currTimer - activeTimer)
+            } else if (getMinute(currTimer - activeTimer) < 5) {
+                listenActivity()
+                console.log('Activity Warning', getMinute(currTimer - activeTimer), currTimer - activeTimer)
+            } else {
+                logout()
+            }
+        })
+    }
+
+
+</script>
 
 </body>
 </html>
