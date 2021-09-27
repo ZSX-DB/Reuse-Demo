@@ -4,10 +4,10 @@
 
 
 // 获取的时间戳把毫秒改成000显示，因为这种方式只精确到秒
-let ts1 = Date.parse(new Date())
+let ts1 = Date.parse(String(new Date()))
 console.log(ts1)
 
-let ts2 = (new Date()).valueOf()
+let ts2 = new Date().valueOf()
 console.log(ts2)
 
 let ts3 = new Date().getTime()
