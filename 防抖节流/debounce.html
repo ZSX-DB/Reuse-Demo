@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Debounce</title>
+</head>
+<body>
+
+<button onclick="output('label')">
+    output
+</button>
+
+<script>
+
+    // 延迟执行
+    // const debounce = (fn, delay = 700) => {
+    //     let timer = null
+    //     return (...args) => {
+    //         if (timer) {
+    //             clearTimeout(timer)
+    //         }
+    //         timer = setTimeout(() => {
+    //             fn(...args)
+    //         }, delay)
+    //     }
+    // }
+
+    // 立即执行
+    const debounce = (fn, delay = 700) => {
+        let timer = null
+        return (...args) => {
+            if (timer) {
+                clearTimeout(timer)
+            }
+            let callNow = !timer
+            timer = setTimeout(() => {
+                timer = null
+            }, delay)
+            if (callNow) {
+                fn(...args)
+            }
+        }
+    }
+
+    const output = debounce(label => {
+        console.log(`Label: ${label}`)
+    })
+
+
+</script>
+
+</body>
+</html>

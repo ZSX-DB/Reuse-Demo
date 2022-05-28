@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Demo</title>
+    <title>Upload To Server</title>
     <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.1/axios.min.js"></script>
 </head>
 <body>
 
 <fieldset>
-    <legend>axios方式（推荐）</legend>
+    <legend>axios 方式（推荐）</legend>
 
     <input type="file" accept="*/*" id="upload" multiple>
 
@@ -17,7 +17,7 @@
 </fieldset>
 
 <fieldset>
-    <legend>form表单提交（不推荐）</legend>
+    <legend>form 表单提交（不推荐）</legend>
 
     <form action="http://localhost:3000/file_upload" enctype="multipart/form-data" method="POST">
         <input name="file" type="file" multiple>

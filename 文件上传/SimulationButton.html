@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Simulation Button</title>
+    <style>
+        .upload-btn {
+            position: relative;
+            overflow: hidden;
+            padding: 0;
+            width: 96px;
+            height: 32px;
+        }
+        .text-box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: grid;
+            place-items: center;
+            width: 100%;
+            height: 100%;
+        }
+        .upload-input {
+            opacity: 0;
+        }
+    </style>
+</head>
+<body>
+
+<button class="upload-btn">
+    <div class="text-box">
+        upload
+    </div>
+    <input type="file" accept="image/png, image/jpeg" id="upload-image" class="upload-input" onchange="upload(this)">
+</button>
+
+<script>
+
+    const upload = (event) => {
+        console.log(event.files)
+    }
+
+</script>
+
+</body>
+</html>
