@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Demo</title>
+</head>
+<body>
+
+<avatar-frame src="https://w.wallhaven.cc/full/x8/wallhaven-x8po7l.jpg" />
+
+<script>
+
+    class AvatarFrame extends HTMLElement {
+        constructor() {
+            // 必须首先调用 super 方法
+            super()
+            const shadow = this.attachShadow({mode: 'open'})
+            const wrapper = document.createElement('div')
+            const img = document.createElement('img')
+            // 设置样式
+            Object.assign(wrapper.style, {
+                overflow: 'hidden',
+                width: '100px',
+                height: '100px',
+                borderRadius: '50%',
+                backgroundColor: '#000'
+            })
+            wrapper.appendChild(img)
+            Object.assign(img.style, {
+                width: '100px',
+                height: '100px',
+                objectFit: 'cover'
+            })
+            // 设置自定义属性
+            const imgUrl = this.getAttribute('src')
+            if (imgUrl) {
+                img.src = imgUrl
+            }
+
+
+            shadow.appendChild(wrapper)
+
+        }
+    }
+
+    customElements.define('avatar-frame', AvatarFrame)
+
+
+</script>
+
+</body>
+</html>
