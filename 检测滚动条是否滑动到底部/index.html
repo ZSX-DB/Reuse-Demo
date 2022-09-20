@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>检测滚动条是否滑动到底部</title>
+    <style>
+      .box {
+        overflow: auto;
+        width: 400px;
+        height: 200px;
+        border: 1px solid #f00;
+      }
+      .inline-box {
+        width: 200px;
+        height: 2000px;
+        border: 1px solid #f0f;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box" onscroll="detect(event)">
+      <div class="inline-box"></div>
+    </div>
+  </body>
+
+  <script>
+    const detect = (event) => {
+      const { scrollTop, clientHeight, scrollHeight } = event.target;
+      if (scrollTop + clientHeight === scrollHeight) {
+        alert('The scroll bar reaches the bottom');
+      }
+    };
+  </script>
+</html>
