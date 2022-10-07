@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复制功能</title>
+</head>
+
+<body>
+
+    <fieldset>
+        <legend>Input</legend>
+        <input id="input" />
+    </fieldset>
+
+    <fieldset>
+        <legend>Textarea</legend>
+        <textarea id="textarea"></textarea>
+    </fieldset>
+
+    <fieldset>
+        <legend>Div</legend>
+        <div id="div">
+            AAA
+            BBBB<br />
+            CCC<br />
+            <div>&nbsp;&nbsp;&nbsp;DDDD</div>
+            EEE FFFF
+        </div>
+    </fieldset>
+
+    <hr />
+
+    <button onclick="copyByInput()">copy input</button>
+    <button onclick="copyByTextarea()">copy textarea</button>
+    <button onclick="copyByDiv()">copy div</button>
+
+
+</body>
+
+<script>
+
+    /**
+     * @param {string} text
+     */
+    const write = (text) => {
+        navigator.clipboard.writeText(text).then(
+            () => {
+                console.log('Copy Success')
+            },
+            () => {
+                console.log('Copy Fail')
+            }
+        )
+    }
+
+
+    const copyByInput = () => {
+        const el = document.querySelector('#input')
+        write(el.value)
+    }
+
+    const copyByTextarea = () => {
+        const el = document.querySelector('#textarea')
+        write(el.value)
+    }
+
+    const copyByDiv = () => {
+        const selection = getSelection()
+        const node = document.querySelector('#div')
+        selection.selectAllChildren(node)
+        write(selection.toString())
+        selection.removeAllRanges()
+    }
+
+</script>
+
+</html>
